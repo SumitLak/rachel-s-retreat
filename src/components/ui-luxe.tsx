@@ -227,11 +227,13 @@ export function ClosingCTA({
   ],
   body = "A favourite place, a programme you love, or the beginnings of a plan. Share what you know and our Retreat Partnership Team will come back to you personally with venue ideas and the next step. No booking is made at this stage.",
   image = "/images/buchlyvie.webp",
+  ctaLabel = "Start planning",
 }: {
   eyebrow?: string;
   lines?: ReactNode[];
   body?: ReactNode;
   image?: string;
+  ctaLabel?: string;
 }) {
   return (
     <section className="grain relative overflow-hidden bg-ink py-24 text-ivory md:py-32">
@@ -241,7 +243,7 @@ export function ClosingCTA({
         <SectionHeading eyebrow={eyebrow} lines={lines} light intro={body} />
         <Reveal delay={0.3} className="mt-12 flex flex-wrap gap-4">
           <ButtonLink to="/plan" variant="light">
-            Start planning
+            {ctaLabel}
           </ButtonLink>
           <ButtonA href="mailto:reservations@rachelsfarm.com" variant="outline-light">
             Email the team

@@ -137,6 +137,7 @@ export function PageHero({
   alt,
   children,
   compact = false,
+  fitIntro = false,
 }: {
   eyebrow: string;
   lines: ReactNode[];
@@ -146,6 +147,11 @@ export function PageHero({
   children?: ReactNode;
   /** Shorter hero for content-heavy pages, so what follows is visible sooner. */
   compact?: boolean;
+  /**
+   * Let the headline run full width and stretch the intro to the headline's
+   * longest line (instead of the default narrow column).
+   */
+  fitIntro?: boolean;
 }) {
   return (
     <section
@@ -163,17 +169,31 @@ export function PageHero({
             {eyebrow}
           </p>
         </Reveal>
-        <SplitLines
-          as="h1"
-          animateOnMount
-          lines={lines}
-          className="max-w-5xl text-[clamp(2.75rem,min(8vw,9.5vh),6rem)]"
-        />
-        {intro && (
-          <Reveal delay={0.35}>
-            <p className="mt-8 max-w-xl text-lg leading-relaxed text-ivory/80">{intro}</p>
-          </Reveal>
-        )}
+        {/* With fitIntro the wrapper shrinks to the headline; the intro uses
+            w-0 min-w-full so it fills that width without widening it. */}
+        <div className={fitIntro ? "w-fit max-w-full" : undefined}>
+          <SplitLines
+            as="h1"
+            animateOnMount
+            lines={lines}
+            className={cn(
+              "text-[clamp(2.75rem,min(8vw,9.5vh),6rem)]",
+              fitIntro ? "max-w-full" : "max-w-5xl",
+            )}
+          />
+          {intro && (
+            <Reveal delay={0.35} className={fitIntro ? "w-0 min-w-full" : ""}>
+              <p
+                className={cn(
+                  "mt-8 text-lg leading-relaxed text-ivory/80",
+                  fitIntro ? "max-w-none" : "max-w-xl",
+                )}
+              >
+                {intro}
+              </p>
+            </Reveal>
+          )}
+        </div>
         {children && <Reveal delay={0.5}>{children}</Reveal>}
       </div>
     </section>

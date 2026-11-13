@@ -61,7 +61,8 @@ function HostPage() {
     <>
       <PageHero
         eyebrow="For retreat organisers"
-        lines={["Bring the idea.", <em key="b">We'll help bring</em>, <em key="c">it to life.</em>]}
+        fitIntro
+        lines={["Bring the idea.", <em key="b">We'll help bring it to life.</em>]}
         intro="Yoga teachers, artists, company organisers, communities and tour operators. Tell us what you want to create, and let's shape the place, food and experience around it."
         image="/images/studio.webp"
         alt="The studio at Rachel's Farm Buchlyvie"

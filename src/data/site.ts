@@ -1,6 +1,9 @@
 // Single source of truth for site content. Facts mirror the previous
 // Rachel's Retreats preview site; edit here and every page updates.
 
+/** Public site address, used for canonical URLs. Change when the custom domain goes live. */
+export const SITE_URL = "https://rachels-retreat.lovable.app";
+
 export const contact = {
   email: "reservations@rachelsfarm.com",
   phone: "+44 (0)131 215 1544",

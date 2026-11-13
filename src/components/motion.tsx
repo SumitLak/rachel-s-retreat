@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import {
   animate,
   motion,
@@ -61,14 +61,17 @@ export function SplitLines({
     return (
       <Plain className={className}>
         {lines.map((line, i) => (
-          <span key={i} className="block overflow-hidden pb-[0.08em]">
-            <span
-              className={cn("animate-line-up block", lineClassName)}
-              style={{ animationDelay: `${(delay + i * 0.12) * 1000}ms` }}
-            >
-              {line}
+          <Fragment key={i}>
+            {i > 0 && " "}
+            <span className="block overflow-hidden pb-[0.08em]">
+              <span
+                className={cn("animate-line-up block", lineClassName)}
+                style={{ animationDelay: `${(delay + i * 0.12) * 1000}ms` }}
+              >
+                {line}
+              </span>
             </span>
-          </span>
+          </Fragment>
         ))}
       </Plain>
     );
@@ -82,17 +85,23 @@ export function SplitLines({
   return (
     <Tag className={className} {...trigger}>
       {lines.map((line, i) => (
-        <span key={i} className="block overflow-hidden pb-[0.08em]">
-          <motion.span
-            className={cn("block", lineClassName)}
-            variants={{
-              hidden: { y: "110%" },
-              show: { y: "0%", transition: { duration: 1.1, ease: EASE, delay: delay + i * 0.12 } },
-            }}
-          >
-            {line}
-          </motion.span>
-        </span>
+        <Fragment key={i}>
+          {i > 0 && " "}
+          <span className="block overflow-hidden pb-[0.08em]">
+            <motion.span
+              className={cn("block", lineClassName)}
+              variants={{
+                hidden: { y: "110%" },
+                show: {
+                  y: "0%",
+                  transition: { duration: 1.1, ease: EASE, delay: delay + i * 0.12 },
+                },
+              }}
+            >
+              {line}
+            </motion.span>
+          </span>
+        </Fragment>
       ))}
     </Tag>
   );

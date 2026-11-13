@@ -1,8 +1,10 @@
-import type { ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { Link, type LinkProps } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Plus } from "lucide-react";
+import { motion } from "motion/react";
+import { venues } from "@/data/site";
 import { cn } from "@/lib/utils";
-import { Reveal, SplitLines, ParallaxImage } from "@/components/motion";
+import { EASE, Reveal, SplitLines, ParallaxImage } from "@/components/motion";
 
 type Variant = "solid" | "light" | "outline" | "outline-light" | "text";
 
@@ -134,6 +136,7 @@ export function PageHero({
   image,
   alt,
   children,
+  compact = false,
 }: {
   eyebrow: string;
   lines: ReactNode[];
@@ -141,9 +144,16 @@ export function PageHero({
   image: string;
   alt: string;
   children?: ReactNode;
+  /** Shorter hero for content-heavy pages, so what follows is visible sooner. */
+  compact?: boolean;
 }) {
   return (
-    <section className="grain relative flex min-h-[88svh] items-end overflow-hidden bg-ink text-ivory">
+    <section
+      className={cn(
+        "grain relative flex items-end overflow-hidden bg-ink text-ivory",
+        compact ? "min-h-[68svh]" : "min-h-[88svh]",
+      )}
+    >
       <ParallaxImage src={image} alt={alt} className="absolute inset-0" strength={8} priority />
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink/30" />
       <div className="container-luxe relative z-10 pb-20 pt-40 md:pb-28">
@@ -184,7 +194,7 @@ export function ClosingCTA({
 }: {
   eyebrow?: string;
   lines?: ReactNode[];
-  body?: string;
+  body?: ReactNode;
   image?: string;
 }) {
   return (
@@ -204,4 +214,91 @@ export function ClosingCTA({
       </div>
     </section>
   );
+}
+
+/** Accordion row. The answer stays in the HTML when closed, so it is crawlable. */
+export function FaqItem({
+  q,
+  children,
+  defaultOpen = false,
+}: {
+  q: string;
+  children: ReactNode;
+  defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  const id = useId();
+  return (
+    <div className="border-b border-border">
+      <h3>
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          aria-controls={id}
+          className="flex w-full items-center justify-between gap-6 py-6 text-left font-display text-2xl leading-snug md:text-3xl"
+        >
+          {q}
+          <Plus
+            className={cn("size-5 shrink-0 transition-transform duration-300", open && "rotate-45")}
+          />
+        </button>
+      </h3>
+      <motion.div
+        id={id}
+        initial={false}
+        animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
+        transition={{ duration: 0.4, ease: EASE }}
+        className="overflow-hidden"
+      >
+        <div className="max-w-3xl pb-7 leading-relaxed text-muted-foreground">{children}</div>
+      </motion.div>
+    </div>
+  );
+}
+
+const venueNamePatterns = venues
+  .map((v) => ({ slug: v.slug, name: v.name.replace(/'/g, "’") }))
+  .concat([
+    { slug: "glenalmond", name: "Glenalmond" },
+    { slug: "buchlyvie", name: "Buchlyvie" },
+  ]);
+
+/**
+ * Renders copy with the first mention of each venue linked to its page.
+ * Pass `seen` to share "already linked" state across paragraphs in a section.
+ */
+export function LinkedText({ text, seen }: { text: string; seen?: Set<string> }) {
+  const used = seen ?? new Set<string>();
+  const parts: ReactNode[] = [];
+  let rest = text;
+  let key = 0;
+  for (;;) {
+    let best: { idx: number; slug: string; name: string } | null = null;
+    for (const p of venueNamePatterns) {
+      if (used.has(p.slug)) continue;
+      const idx = rest.indexOf(p.name);
+      if (
+        idx >= 0 &&
+        (best === null || idx < best.idx || (idx === best.idx && p.name.length > best.name.length))
+      )
+        best = { idx, ...p };
+    }
+    if (!best) break;
+    parts.push(rest.slice(0, best.idx));
+    parts.push(
+      <Link
+        key={key++}
+        to="/venues/$slug"
+        params={{ slug: best.slug }}
+        className="font-semibold text-forest underline decoration-brass/50 underline-offset-4 transition-colors hover:decoration-forest"
+      >
+        {best.name}
+      </Link>,
+    );
+    used.add(best.slug);
+    rest = rest.slice(best.idx + best.name.length);
+  }
+  parts.push(rest);
+  return <>{parts}</>;
 }

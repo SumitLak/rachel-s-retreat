@@ -252,8 +252,10 @@ export function useEmblaNav(options: Parameters<typeof useEmblaCarousel>[0]) {
   const [canNext, setCanNext] = useState(true);
   const [progress, setProgress] = useState(0);
   const [selected, setSelected] = useState(0);
+  const [snapCount, setSnapCount] = useState(0);
   const update = useCallback(() => {
     if (!api) return;
+    setSnapCount(api.scrollSnapList().length);
     setCanPrev(api.canScrollPrev());
     setCanNext(api.canScrollNext());
     setSelected(api.selectedScrollSnap());
@@ -267,7 +269,7 @@ export function useEmblaNav(options: Parameters<typeof useEmblaCarousel>[0]) {
       api.off("select", update).off("reInit", update).off("scroll", update);
     };
   }, [api, update]);
-  return { ref, api, canPrev, canNext, progress, selected };
+  return { ref, api, canPrev, canNext, progress, selected, snapCount };
 }
 
 export function ArrowButtons({
@@ -308,10 +310,11 @@ export function ArrowButtons({
 }
 
 export function VenueCarousel({ venues, header }: { venues: Venue[]; header?: ReactNode }) {
-  const { ref, api, canPrev, canNext, progress } = useEmblaNav({
+  const { ref, api, canPrev, canNext, progress, selected, snapCount } = useEmblaNav({
     align: "start",
-    dragFree: true,
     containScroll: "trimSnaps",
+    // Snap card-by-card on phones (so the dots match); free drag on larger screens.
+    breakpoints: { "(min-width: 768px)": { dragFree: true } },
   });
   return (
     <div>
@@ -338,8 +341,34 @@ export function VenueCarousel({ venues, header }: { venues: Venue[]; header?: Re
           </div>
         </div>
       </Reveal>
-      <div className="container-luxe mt-12 flex items-center gap-6">
-        <div className="relative h-px flex-1 bg-border">
+      {snapCount > 1 && (
+        <div
+          className="container-luxe mt-8 flex items-center justify-center gap-2 md:hidden"
+          role="tablist"
+          aria-label="Choose a venue"
+        >
+          {Array.from({ length: snapCount }, (_, i) => (
+            <button
+              key={i}
+              type="button"
+              role="tab"
+              aria-selected={i === selected}
+              aria-label={`Show venue ${i + 1} of ${snapCount}`}
+              onClick={() => api?.scrollTo(i)}
+              className="grid h-6 place-items-center px-0.5"
+            >
+              <span
+                className={cn(
+                  "block h-2 rounded-full transition-all duration-300 ease-out",
+                  i === selected ? "w-6 bg-forest" : "w-2 bg-ink/25",
+                )}
+              />
+            </button>
+          ))}
+        </div>
+      )}
+      <div className="container-luxe mt-6 flex items-center justify-center gap-6 md:mt-12 md:justify-start">
+        <div className="relative hidden h-px flex-1 bg-border md:block">
           <div
             className="absolute inset-y-0 left-0 w-full origin-left bg-ink transition-transform duration-150"
             style={{ transform: `scaleX(${0.12 + progress * 0.88})` }}

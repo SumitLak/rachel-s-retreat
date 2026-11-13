@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Counter, ParallaxImage, Reveal, SplitLines } from "@/components/motion";
+import { Counter, FullFrameParallax, ParallaxImage, Reveal, SplitLines } from "@/components/motion";
 import { ButtonLink, ClosingCTA, SectionHeading } from "@/components/ui-luxe";
 import {
   ExperienceSelector,
@@ -201,12 +201,21 @@ function Home() {
       <PlannerTeaser />
 
       {/* Scotland parallax band */}
-      <section className="grain relative flex min-h-[75vh] items-center overflow-hidden bg-ink text-ivory md:aspect-[1200/868] md:min-h-0">
+      {/* md+: frame is 85% of the photo's height so it slides 15% with no zoom */}
+      <section className="grain relative flex min-h-[75vh] items-center overflow-hidden bg-ink text-ivory md:aspect-[1200/738] md:min-h-0">
         <ParallaxImage
           src="/images/kelpies.webp"
           alt="The Kelpies, Falkirk"
-          className="absolute inset-0"
-          strength={4}
+          className="absolute inset-0 md:hidden"
+          strength={12}
+        />
+        <FullFrameParallax
+          src="/images/kelpies.webp"
+          alt="The Kelpies, Falkirk"
+          className="absolute inset-0 hidden md:block"
+          travel={15}
+          width={1200}
+          height={868}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/25 to-transparent md:via-ink/15" />
         <div className="container-luxe relative z-10 py-20">

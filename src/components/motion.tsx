@@ -132,6 +132,48 @@ export function ParallaxImage({
   );
 }
 
+/**
+ * Parallax that never zooms or crops sideways: the image is shown full-width at
+ * its natural aspect ratio inside a frame `travel` shorter than it, and slides
+ * through that spare height as the frame crosses the viewport. At mid-scroll the
+ * centre (100 - travel)% of the image is visible.
+ */
+export function FullFrameParallax({
+  src,
+  alt,
+  className,
+  travel = 15,
+  width,
+  height,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  travel?: number;
+  /** Intrinsic size, so the image keeps its aspect ratio before it loads. */
+  width: number;
+  height: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", `-${travel}%`]);
+  return (
+    <div ref={ref} className={cn("relative overflow-hidden", className)}>
+      <motion.img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        width={width}
+        height={height}
+        style={reduce ? { y: `-${travel / 2}%` } : { y }}
+        className="absolute inset-x-0 top-0 block h-auto w-full"
+      />
+    </div>
+  );
+}
+
 /** Number that counts up when it scrolls into view. */
 export function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);

@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import { EASE, Reveal, RevealImage, SplitLines } from "@/components/motion";
+import { Reveal, RevealImage, SplitLines } from "@/components/motion";
 import { ButtonLink, ClosingCTA, FaqItem, LinkedText, SectionHeading } from "@/components/ui-luxe";
 import {
   HospitalityExplorer,
@@ -97,23 +96,25 @@ function HowWeHelp() {
               </a>
             </div>
           </div>
-          <motion.div
-            className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-stone"
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, ease: EASE }}
-          >
+          {/* Reveal is CSS-driven so the image shows before hydration; disabled for reduced motion. */}
+          <div className="animate-image-reveal relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-stone">
             <img
-              src="/images/art.webp"
-              alt="Guests gathered together during a hosted retreat session"
+              src="/images/hospitality-table-setting.webp"
+              alt="A member of the Rachel’s Retreats team arranging heather and candles on a dining table before guests arrive"
+              width={425}
+              height={637}
               fetchPriority="high"
-              className="absolute inset-0 h-full w-full object-cover"
+              decoding="async"
+              className="animate-image-settle absolute inset-0 h-full w-full object-cover"
             />
-            <div className="absolute inset-x-4 bottom-4 rounded-[1.25rem] bg-ivory/90 p-4 backdrop-blur">
-              <p className="eyebrow text-[0.56rem] text-forest">Behind every stay</p>
-              <p className="mt-1 font-display text-xl">Planners, event managers, hosts and chefs</p>
+            <div
+              className="animate-fade-up absolute inset-x-4 bottom-4 rounded-[1.25rem] bg-ivory/90 p-4 backdrop-blur"
+              style={{ animationDelay: "500ms" }}
+            >
+              <p className="eyebrow text-[0.56rem] text-forest">The people behind the experience</p>
+              <p className="mt-1 font-display text-xl">Every detail, thoughtfully considered.</p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 

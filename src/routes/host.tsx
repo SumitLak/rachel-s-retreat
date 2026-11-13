@@ -93,17 +93,17 @@ function HostPage() {
         </div>
       </section>
 
-      <section>
-        <div className="container-luxe">
-          <SectionHeading
-            eyebrow="How hosting works"
-            lines={["From your first idea", <em key="a">to arrival.</em>]}
-            intro="You deliver the programme and sell the places. We coordinate the agreed accommodation, hospitality and practical arrangements."
-          />
-        </div>
-        <div className="mt-8 pb-20">
-          <ScrollStory steps={hostSteps} />
-        </div>
+      <section className="pb-12 md:pb-16">
+        <ScrollStory
+          steps={hostSteps}
+          header={
+            <SectionHeading
+              eyebrow="How hosting works"
+              lines={["From your first idea", <em key="a">to arrival.</em>]}
+              intro="You deliver the programme and sell the places. We coordinate the agreed accommodation, hospitality and practical arrangements."
+            />
+          }
+        />
       </section>
 
       <section className="bg-stone py-16 md:py-24">

@@ -164,18 +164,18 @@ function Home() {
       </section>
 
       {/* Scroll story */}
-      <section className="pt-16 md:pt-24">
-        <div className="container-luxe">
-          <SectionHeading
-            eyebrow="How hosting works"
-            lines={["From your first idea", <em key="a">to arrival.</em>]}
-            intro="You deliver the programme and sell the places. We coordinate the agreed accommodation, hospitality and practical arrangements."
-          />
-        </div>
-        <div className="mt-10">
-          <ScrollStory steps={hostSteps} />
-        </div>
-        <div className="container-luxe pb-16 md:pb-24">
+      <section className="pt-12 md:pt-16">
+        <ScrollStory
+          steps={hostSteps}
+          header={
+            <SectionHeading
+              eyebrow="How hosting works"
+              lines={["From your first idea", <em key="a">to arrival.</em>]}
+              intro="You deliver the programme and sell the places. We coordinate the agreed accommodation, hospitality and practical arrangements."
+            />
+          }
+        />
+        <div className="container-luxe pb-12 pt-4 md:pb-16">
           <Reveal>
             <ButtonLink to="/host">See the full hosting journey</ButtonLink>
           </Reveal>

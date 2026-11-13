@@ -373,7 +373,7 @@ function StoryStep({
     if (inView) onActive(index);
   }, [inView, index, onActive]);
   return (
-    <div ref={ref} className="flex min-h-[55vh] items-center py-8 lg:min-h-[75vh]">
+    <div ref={ref} className="flex items-center py-6 lg:min-h-[52vh] lg:py-8">
       <div
         className={cn("transition-opacity duration-700", active ? "opacity-100" : "lg:opacity-30")}
       >
@@ -393,8 +393,10 @@ function StoryStep({
 
 export function ScrollStory({
   steps,
+  header,
 }: {
   steps: { n: string; title: string; body: string; image: string }[];
+  header?: ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -402,10 +404,10 @@ export function ScrollStory({
   const bar = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
   const current = steps[active] ?? steps[0]!;
   return (
-    <div ref={ref} className="container-luxe grid gap-10 lg:grid-cols-2 lg:gap-20">
+    <div ref={ref} className="container-luxe grid gap-8 lg:grid-cols-2 lg:gap-16">
       <div className="relative hidden lg:block">
-        <div className="sticky top-0 flex h-screen items-center">
-          <div className="relative aspect-[4/5] w-full overflow-hidden bg-stone">
+        <div className="sticky top-24 flex h-[calc(100svh-7rem)] items-center">
+          <div className="relative h-full max-h-[46rem] w-full overflow-hidden bg-stone">
             <AnimatePresence initial={false}>
               <motion.img
                 key={current.image}
@@ -433,6 +435,7 @@ export function ScrollStory({
         </div>
       </div>
       <div>
+        {header && <div className="pb-4 lg:pt-10">{header}</div>}
         {steps.map((s, i) => (
           <StoryStep key={s.n} step={s} index={i} active={i === active} onActive={setActive} />
         ))}

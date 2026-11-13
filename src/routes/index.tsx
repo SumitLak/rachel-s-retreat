@@ -18,19 +18,23 @@ import {
   ScrollStory,
   VenueCarousel,
 } from "@/components/sections";
-import { hostSteps, retreats, venues } from "@/data/site";
+import { hostSteps, retreats, SITE_URL, venues } from "@/data/site";
 import { PlannerTeaser } from "@/components/planner/PlannerTeaser";
+
+const homeTitle = "Luxury Retreat Venues & Experiences | Rachel’s Retreats";
+const homeDescription =
+  "Discover luxury retreat venues across Scotland, England, Ireland and Italy. Host your own retreat or explore upcoming yoga, wellness and creative retreats.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Rachel's Retreats — Host a retreat. Find your escape." },
-      {
-        name: "description",
-        content:
-          "Private retreat venues in Scotland, England, Ireland, Italy and France. Chefs, hosts and one team around the people you bring.",
-      },
+      { title: homeTitle },
+      { name: "description", content: homeDescription },
+      { property: "og:title", content: homeTitle },
+      { property: "og:description", content: homeDescription },
+      { property: "og:url", content: `${SITE_URL}/` },
     ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
   }),
   component: Home,
 });

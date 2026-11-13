@@ -83,7 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Private retreat venues across Scotland, England, Ireland, Italy and France, with chefs, hosts and one team around your retreat.",
       },
       { name: "author", content: "Rachel's Retreats" },
-      { name: "theme-color", content: "#23302a" },
+      { name: "theme-color", content: "#2c3a31" },
       { property: "og:title", content: "Rachel's Retreats" },
       {
         property: "og:description",
@@ -100,7 +100,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap",
       },
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      // Rachel's Retreats "r" mark on forest green.
+      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
+      { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
+      { rel: "manifest", href: "/site.webmanifest" },
     ],
   }),
   shellComponent: RootShell,

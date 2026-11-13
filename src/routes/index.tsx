@@ -1,5 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Counter, FullFrameParallax, ParallaxImage, Reveal, SplitLines } from "@/components/motion";
+import { motion } from "motion/react";
+import { ChefHat, Compass, KeyRound, Users } from "lucide-react";
+import {
+  Counter,
+  EASE,
+  FullFrameParallax,
+  ParallaxImage,
+  Reveal,
+  SplitLines,
+} from "@/components/motion";
 import { ButtonLink, ClosingCTA, SectionHeading } from "@/components/ui-luxe";
 import {
   ExperienceSelector,
@@ -25,6 +34,9 @@ export const Route = createFileRoute("/")({
   }),
   component: Home,
 });
+
+// Icons follow the panel style used in "Why Choose Rachel's Retreats" on /venues.
+const pillarIcons = [KeyRound, ChefHat, Compass, Users];
 
 const pillars = [
   {
@@ -152,16 +164,26 @@ function Home() {
             ]}
             intro="Menus planned around your guests. Rooms ready for their arrival. The right people, places and experiences brought together with care."
           />
-          <div className="mt-12 grid gap-px bg-ivory/15 sm:grid-cols-2 lg:grid-cols-4">
-            {pillars.map((p, i) => (
-              <Reveal key={p.title} delay={i * 0.1} className="bg-forest">
-                <div className="group h-full p-8 transition-colors duration-500 hover:bg-ink/40 md:p-10">
-                  <p className="font-display text-5xl italic text-brass">0{i + 1}</p>
-                  <h3 className="mt-8 text-3xl">{p.title}</h3>
-                  <p className="mt-4 text-sm leading-relaxed text-ivory/70">{p.body}</p>
-                </div>
-              </Reveal>
-            ))}
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {pillars.map((p, i) => {
+              const Icon = pillarIcons[i] ?? KeyRound;
+              return (
+                <motion.article
+                  key={p.title}
+                  className="h-full rounded-[1.5rem] bg-ivory/[0.06] p-8 ring-1 ring-ivory/15 transition-colors duration-300 hover:bg-ivory/[0.1] md:p-9"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+                  transition={{ duration: 0.7, ease: EASE, delay: i * 0.1 }}
+                >
+                  <span className="grid size-12 place-items-center rounded-full bg-brass/20 text-brass">
+                    <Icon className="size-5" />
+                  </span>
+                  <h3 className="mt-6 text-3xl leading-tight">{p.title}</h3>
+                  <p className="mt-4 text-[0.95rem] leading-relaxed text-ivory/75">{p.body}</p>
+                </motion.article>
+              );
+            })}
           </div>
         </div>
       </section>

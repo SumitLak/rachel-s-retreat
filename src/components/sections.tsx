@@ -328,7 +328,7 @@ export function VenueCarousel({ venues, header }: { venues: Venue[]; header?: Re
       </div>
       <Reveal className="mt-10">
         <div className="cursor-grab overflow-hidden active:cursor-grabbing" ref={ref}>
-          <div className="flex gap-6 pl-5 md:pl-10 xl:pl-[max(4rem,calc((100vw-88rem)/2+4rem))]">
+          <div className="flex gap-6 pl-5 md:pl-10 xl:pl-[max(3rem,calc((100vw-104rem)/2+3rem))]">
             {venues.map((v) => (
               <div key={v.slug} className="w-[82vw] shrink-0 sm:w-[52vw] lg:w-[36vw] xl:w-[32rem]">
                 <VenueCard venue={v} />
@@ -447,12 +447,13 @@ export function ScrollStory({
 /* ------------------------------------------------------------------ */
 /* Experience selector: tabs swap imagery and copy                     */
 /* ------------------------------------------------------------------ */
-export function ExperienceSelector() {
+export function ExperienceSelector({ header }: { header?: ReactNode }) {
   const [active, setActive] = useState(0);
   const exp = experiences[active] ?? experiences[0]!;
   return (
-    <div className="container-luxe grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
+    <div className="container-luxe grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
       <div>
+        {header && <div className="mb-10">{header}</div>}
         <div role="tablist" aria-label="Retreat types" className="border-t border-border">
           {experiences.map((e, i) => (
             <button

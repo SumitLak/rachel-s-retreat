@@ -76,6 +76,7 @@ function HostPage() {
       <section className="py-16 md:py-24">
         <div className="container-luxe">
           <SectionHeading
+            split
             eyebrow="Fully managed, thoughtfully personal"
             lines={["More time with your people.", <em key="l">Less time on the detail.</em>]}
             intro="A private setting, menus to suit your guests and hosts who help the days run smoothly. Bring your programme and ask us for the support around it."
@@ -107,13 +108,14 @@ function HostPage() {
       </section>
 
       <section className="bg-stone py-16 md:py-24">
-        <div className="container-luxe mb-10">
-          <SectionHeading
-            eyebrow="Space for your ideas"
-            lines={["Every kind of", <em key="g">gathering.</em>]}
-          />
-        </div>
-        <ExperienceSelector />
+        <ExperienceSelector
+          header={
+            <SectionHeading
+              eyebrow="Space for your ideas"
+              lines={["Every kind of", <em key="g">gathering.</em>]}
+            />
+          }
+        />
       </section>
 
       <section className="py-16 md:py-24">

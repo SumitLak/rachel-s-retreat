@@ -62,6 +62,7 @@ export function SectionHeading({
   className,
   light = false,
   align = "left",
+  split = false,
 }: {
   eyebrow: string;
   lines: ReactNode[];
@@ -69,7 +70,28 @@ export function SectionHeading({
   className?: string;
   light?: boolean;
   align?: "left" | "center";
+  /** Full-width: heading left, intro right (lg+), so no empty right side. */
+  split?: boolean;
 }) {
+  if (split) {
+    return (
+      <div className={cn("grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16", className)}>
+        <SectionHeading eyebrow={eyebrow} lines={lines} light={light} />
+        {intro && (
+          <Reveal delay={0.2}>
+            <div
+              className={cn(
+                "max-w-xl text-lg leading-relaxed lg:pb-3",
+                light ? "text-ivory/80" : "text-muted-foreground",
+              )}
+            >
+              {intro}
+            </div>
+          </Reveal>
+        )}
+      </div>
+    );
+  }
   return (
     <div className={cn(align === "center" && "mx-auto text-center", "max-w-3xl", className)}>
       <Reveal>

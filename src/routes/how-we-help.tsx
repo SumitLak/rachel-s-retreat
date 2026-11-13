@@ -87,6 +87,7 @@ function HowWeHelp() {
       <section className="grain relative overflow-hidden bg-forest py-16 text-ivory md:py-24">
         <div className="container-luxe">
           <SectionHeading
+            split
             light
             eyebrow="The people behind the welcome"
             lines={[

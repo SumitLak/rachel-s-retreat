@@ -127,6 +127,8 @@ function Home() {
           venues={venues}
           header={
             <SectionHeading
+              split
+              className="flex-1"
               eyebrow="Our collection"
               lines={["Find your kind", <em key="e">of elsewhere.</em>]}
               intro="From the Scottish countryside to the warmth of Tuscany, choose a setting that suits your people."
@@ -139,6 +141,7 @@ function Home() {
       <section className="grain relative overflow-hidden bg-forest py-16 text-ivory md:py-24">
         <div className="container-luxe">
           <SectionHeading
+            split
             light
             eyebrow="For the people who bring people together"
             lines={[
@@ -184,14 +187,15 @@ function Home() {
 
       {/* Experience selector */}
       <section className="bg-stone py-16 md:py-24">
-        <div className="container-luxe mb-10">
-          <SectionHeading
-            eyebrow="Space for your ideas"
-            lines={["What will", <em key="b">you bring?</em>]}
-            intro="A week of practice, a creative community, a team coming together. We shape the setting and hospitality around your programme."
-          />
-        </div>
-        <ExperienceSelector />
+        <ExperienceSelector
+          header={
+            <SectionHeading
+              eyebrow="Space for your ideas"
+              lines={["What will", <em key="b">you bring?</em>]}
+              intro="A week of practice, a creative community, a team coming together. We shape the setting and hospitality around your programme."
+            />
+          }
+        />
       </section>
 
       <PlannerTeaser />
@@ -232,6 +236,8 @@ function Home() {
         <div className="container-luxe">
           <div className="flex flex-col justify-between gap-10 md:flex-row md:items-end">
             <SectionHeading
+              split
+              className="flex-1"
               eyebrow="Come along"
               lines={["Your next retreat", <em key="s">starts here.</em>]}
               intro="Join a programme led by people who love what they do. Enquire with our team for details and help with the next step."

@@ -31,6 +31,38 @@ export type Venue = {
   image: string;
   gallery: GalleryImage[];
   comingSoon?: boolean;
+  /** Structured, verified rules used by the planner's venue matching. */
+  rules: VenueRules;
+};
+
+export type Facility =
+  | "studio"
+  | "practice-hall"
+  | "wellbeing-space"
+  | "hot-tubs"
+  | "pools"
+  | "river"
+  | "lake"
+  | "lodges"
+  | "leader-room";
+
+export type VenueRules = {
+  status: "bookable" | "coming-soon";
+  /** Published bedroom count, or null where the team must confirm. */
+  bedrooms: number | null;
+  /** True where extra rooms can be added by arrangement (lodges, optional rooms). */
+  extraRooms: boolean;
+  /** Minimum nights. peakMonths are 1-12; outside them offPeak applies. */
+  minNights: { peak: number; offPeak: number; peakMonths: number[] };
+  accommodationOnly: boolean;
+  facilities: Facility[];
+};
+
+const fiveNights = { peak: 5, offPeak: 5, peakMonths: [] as number[] };
+const cateredRules = {
+  accommodationOnly: false,
+  minNights: fiveNights,
+  status: "bookable" as const,
 };
 
 const hospitality: GalleryImage[] = [
@@ -79,6 +111,14 @@ export const venues: Venue[] = [
     minimumStay: "4 nights April to October; 2 nights off season",
     bookingOptions: "Exclusive hire or a minimum of 8 bedrooms",
     catering: "Accommodation-only or catered and hosted bookings available.",
+    rules: {
+      status: "bookable",
+      bedrooms: 16,
+      extraRooms: true,
+      minNights: { peak: 4, offPeak: 2, peakMonths: [4, 5, 6, 7, 8, 9, 10] },
+      accommodationOnly: true,
+      facilities: ["studio", "hot-tubs", "lodges"],
+    },
     image: "/images/buchlyvie.webp",
     gallery: [
       {
@@ -125,6 +165,7 @@ export const venues: Venue[] = [
     minimumStay: "5 nights",
     bookingOptions: "Exclusive hire or a minimum of 10 bedrooms",
     catering: cateredRequired,
+    rules: { ...cateredRules, bedrooms: 14, extraRooms: true, facilities: ["studio", "hot-tubs"] },
     image: "/images/glenalmond.webp",
     gallery: [
       {
@@ -156,6 +197,12 @@ export const venues: Venue[] = [
     minimumStay: "5 nights",
     bookingOptions: "Exclusive hire or an 8-bedroom option",
     catering: cateredRequired,
+    rules: {
+      ...cateredRules,
+      bedrooms: 15,
+      extraRooms: false,
+      facilities: ["wellbeing-space", "lake"],
+    },
     image: "/images/manor-house.webp",
     gallery: [
       {
@@ -187,6 +234,7 @@ export const venues: Venue[] = [
     minimumStay: "5 nights",
     bookingOptions: "Exclusive hire",
     catering: cateredRequired,
+    rules: { ...cateredRules, bedrooms: 15, extraRooms: false, facilities: ["pools"] },
     image: "/images/villa-senesi.webp",
     gallery: [
       {
@@ -218,6 +266,12 @@ export const venues: Venue[] = [
     minimumStay: "5 nights",
     bookingOptions: "Exclusive hire",
     catering: cateredRequired,
+    rules: {
+      ...cateredRules,
+      bedrooms: 14,
+      extraRooms: false,
+      facilities: ["practice-hall", "river"],
+    },
     image: "/images/river-lodge.webp",
     gallery: [
       {
@@ -249,6 +303,12 @@ export const venues: Venue[] = [
     minimumStay: "5 nights",
     bookingOptions: "Exclusive hire",
     catering: cateredRequired,
+    rules: {
+      ...cateredRules,
+      bedrooms: 15,
+      extraRooms: false,
+      facilities: ["lake", "leader-room"],
+    },
     image: "/images/lakeside-lodge.webp",
     gallery: [
       {
@@ -279,6 +339,13 @@ export const venues: Venue[] = [
     minimumStay: "5 nights",
     bookingOptions: "Exclusive hire; release dates to be confirmed",
     catering: cateredRequired,
+    rules: {
+      ...cateredRules,
+      status: "coming-soon",
+      bedrooms: 15,
+      extraRooms: false,
+      facilities: [],
+    },
     image: "/images/chateau.webp",
     comingSoon: true,
     gallery: [
@@ -294,13 +361,7 @@ export const venues: Venue[] = [
 
 export const getVenue = (slug: string) => venues.find((v) => v.slug === slug);
 
-export type RetreatType =
-  | "yoga"
-  | "art"
-  | "business"
-  | "interest"
-  | "golf"
-  | "scotland";
+export type RetreatType = "yoga" | "art" | "business" | "interest" | "golf" | "scotland";
 
 export const experiences: {
   id: RetreatType;
@@ -462,9 +523,34 @@ export const retreats: Retreat[] = [
 ];
 
 export const heroSlides = [
-  { image: "/images/villa-senesi.webp", label: "Villa Senesi", place: "Tuscany, Italy", slug: "villa-senesi" },
-  { image: "/images/buchlyvie.webp", label: "Rachel's Farm Buchlyvie", place: "Stirlingshire, Scotland", slug: "buchlyvie" },
-  { image: "/images/manor-house.webp", label: "The Manor House", place: "County Monaghan, Ireland", slug: "manor-house" },
-  { image: "/images/lakeside-lodge.webp", label: "Lakeside Lodge", place: "Lake District, England", slug: "lakeside-lodge" },
-  { image: "/images/river-lodge.webp", label: "Wild River Lodge", place: "Cairngorms, Scotland", slug: "wild-river-lodge" },
+  {
+    image: "/images/villa-senesi.webp",
+    label: "Villa Senesi",
+    place: "Tuscany, Italy",
+    slug: "villa-senesi",
+  },
+  {
+    image: "/images/buchlyvie.webp",
+    label: "Rachel's Farm Buchlyvie",
+    place: "Stirlingshire, Scotland",
+    slug: "buchlyvie",
+  },
+  {
+    image: "/images/manor-house.webp",
+    label: "The Manor House",
+    place: "County Monaghan, Ireland",
+    slug: "manor-house",
+  },
+  {
+    image: "/images/lakeside-lodge.webp",
+    label: "Lakeside Lodge",
+    place: "Lake District, England",
+    slug: "lakeside-lodge",
+  },
+  {
+    image: "/images/river-lodge.webp",
+    label: "Wild River Lodge",
+    place: "Cairngorms, Scotland",
+    slug: "wild-river-lodge",
+  },
 ];

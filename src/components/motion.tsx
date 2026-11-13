@@ -54,10 +54,31 @@ export function SplitLines({
   as?: "h1" | "h2" | "h3" | "p";
   animateOnMount?: boolean;
 }) {
+  // Above-the-fold headlines use a CSS animation so they appear immediately,
+  // even before hydration or if JavaScript is slow/blocked.
+  if (animateOnMount) {
+    const Plain = as;
+    return (
+      <Plain className={className}>
+        {lines.map((line, i) => (
+          <span key={i} className="block overflow-hidden pb-[0.08em]">
+            <span
+              className={cn("animate-line-up block", lineClassName)}
+              style={{ animationDelay: `${(delay + i * 0.12) * 1000}ms` }}
+            >
+              {line}
+            </span>
+          </span>
+        ))}
+      </Plain>
+    );
+  }
   const Tag = motion[as];
-  const trigger = animateOnMount
-    ? { initial: "hidden", animate: "show" }
-    : { initial: "hidden", whileInView: "show", viewport: { once: true, margin: "0px 0px -10% 0px" } };
+  const trigger = {
+    initial: "hidden",
+    whileInView: "show",
+    viewport: { once: true, margin: "0px 0px -10% 0px" },
+  };
   return (
     <Tag className={className} {...trigger}>
       {lines.map((line, i) => (

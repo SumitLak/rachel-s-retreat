@@ -59,7 +59,12 @@ function VenuesPage() {
             <div className="flex flex-wrap items-center gap-2">
               <span className="eyebrow mr-3 text-[0.6rem] text-muted-foreground">Destination</span>
               {(["All", ...countries] as const).map((c) => (
-                <FilterButton key={c} group="country" active={country === c} onClick={() => setCountry(c)}>
+                <FilterButton
+                  key={c}
+                  group="country"
+                  active={country === c}
+                  onClick={() => setCountry(c)}
+                >
                   {c === "All" ? "All" : c}
                 </FilterButton>
               ))}
@@ -67,7 +72,12 @@ function VenuesPage() {
             <div className="flex flex-wrap items-center gap-2">
               <span className="eyebrow mr-3 text-[0.6rem] text-muted-foreground">Group</span>
               {sizes.map((s) => (
-                <FilterButton key={s.label} group="size" active={size === s.max} onClick={() => setSize(s.max)}>
+                <FilterButton
+                  key={s.label}
+                  group="size"
+                  active={size === s.max}
+                  onClick={() => setSize(s.max)}
+                >
                   {s.label}
                 </FilterButton>
               ))}
@@ -99,8 +109,8 @@ function VenuesPage() {
             <div className="mt-6 bg-stone p-10 text-center">
               <h3 className="text-4xl">Let's find the right fit.</h3>
               <p className="mx-auto mt-4 max-w-md text-muted-foreground">
-                No venues in this selection match that group size. Try another destination or ask our
-                team for advice.
+                No venues in this selection match that group size. Try another destination or ask
+                our team for advice.
               </p>
               <ButtonLink to="/plan" className="mt-8">
                 Ask us about your group
@@ -117,7 +127,12 @@ function VenuesPage() {
 
       <ClosingCTA
         eyebrow="Not sure which place?"
-        lines={["Let us help you", <em key="c" className="text-brass">choose.</em>]}
+        lines={[
+          "Let us help you",
+          <em key="c" className="text-brass">
+            choose.
+          </em>,
+        ]}
         body="Start with your group, your dates and what matters to you. We'll help you explore the options."
         image="/images/glenalmond.webp"
       />
@@ -147,7 +162,11 @@ function FilterButton({
       )}
     >
       {active && (
-        <motion.span layoutId={`filter-${group}`} className="absolute inset-0 bg-forest" transition={{ duration: 0.45, ease: EASE }} />
+        <motion.span
+          layoutId={`filter-${group}`}
+          className="absolute inset-0 bg-forest"
+          transition={{ duration: 0.45, ease: EASE }}
+        />
       )}
       <span className="relative">{children}</span>
     </button>

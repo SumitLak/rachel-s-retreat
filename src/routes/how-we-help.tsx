@@ -10,7 +10,8 @@ export const Route = createFileRoute("/how-we-help")({
       { title: "Our hospitality — Rachel's Retreats" },
       {
         name: "description",
-        content: "Retreat planners, event managers, dedicated hosts and private chefs: one team around your retreat.",
+        content:
+          "Retreat planners, event managers, dedicated hosts and private chefs: one team around your retreat.",
       },
     ],
   }),
@@ -60,7 +61,10 @@ function HowWeHelp() {
 
       <section className="space-y-28 py-28 md:space-y-40 md:py-40">
         {chapters.map((c, i) => (
-          <div key={c.n} className="container-luxe grid items-center gap-12 lg:grid-cols-2 lg:gap-24">
+          <div
+            key={c.n}
+            className="container-luxe grid items-center gap-12 lg:grid-cols-2 lg:gap-24"
+          >
             <ParallaxImage
               src={c.image}
               alt=""
@@ -85,7 +89,12 @@ function HowWeHelp() {
           <SectionHeading
             light
             eyebrow="The people behind the welcome"
-            lines={["One team around", <em key="y" className="text-brass">your retreat.</em>]}
+            lines={[
+              "One team around",
+              <em key="y" className="text-brass">
+                your retreat.
+              </em>,
+            ]}
             intro="Rachel's approach puts guest experience at the heart of the stay. The team brings that care into the planning, the food and the everyday details."
           />
           <div className="mt-20 grid gap-px bg-ivory/15 sm:grid-cols-2 lg:grid-cols-4">

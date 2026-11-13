@@ -73,7 +73,13 @@ export function SectionHeading({
   return (
     <div className={cn(align === "center" && "mx-auto text-center", "max-w-3xl", className)}>
       <Reveal>
-        <p className={cn("eyebrow mb-6 flex items-center gap-4", light ? "text-brass" : "text-forest", align === "center" && "justify-center")}>
+        <p
+          className={cn(
+            "eyebrow mb-6 flex items-center gap-4",
+            light ? "text-brass" : "text-forest",
+            align === "center" && "justify-center",
+          )}
+        >
           <span className="h-px w-10 bg-current" aria-hidden />
           {eyebrow}
         </p>
@@ -84,7 +90,12 @@ export function SectionHeading({
       />
       {intro && (
         <Reveal delay={0.2}>
-          <div className={cn("mt-8 text-lg leading-relaxed", light ? "text-ivory/80" : "text-muted-foreground")}>
+          <div
+            className={cn(
+              "mt-8 text-lg leading-relaxed",
+              light ? "text-ivory/80" : "text-muted-foreground",
+            )}
+          >
             {intro}
           </div>
         </Reveal>
@@ -120,7 +131,12 @@ export function PageHero({
             {eyebrow}
           </p>
         </Reveal>
-        <SplitLines as="h1" animateOnMount lines={lines} className="max-w-5xl text-6xl md:text-7xl lg:text-8xl" />
+        <SplitLines
+          as="h1"
+          animateOnMount
+          lines={lines}
+          className="max-w-5xl text-[clamp(2.75rem,min(8vw,9.5vh),6rem)]"
+        />
         {intro && (
           <Reveal delay={0.35}>
             <p className="mt-8 max-w-xl text-lg leading-relaxed text-ivory/80">{intro}</p>
@@ -135,7 +151,12 @@ export function PageHero({
 /** Closing cinematic invitation used at the foot of every page. */
 export function ClosingCTA({
   eyebrow = "Let's make it happen",
-  lines = ["Tell us about", <em key="r" className="text-brass">your retreat.</em>],
+  lines = [
+    "Tell us about",
+    <em key="r" className="text-brass">
+      your retreat.
+    </em>,
+  ],
   body = "A favourite place, a programme you love, or the beginnings of a plan. Share what you know and our Retreat Partnership Team will come back to you personally with venue ideas and the next step. No booking is made at this stage.",
   image = "/images/buchlyvie.webp",
 }: {

@@ -16,16 +16,16 @@ const nav = [
 
 function Logo({ light }: { light: boolean }) {
   return (
-    <Link to="/" className="flex items-center gap-3" aria-label="Rachel's Retreats home">
+    <Link to="/" className="flex shrink-0 items-center gap-3" aria-label="Rachel's Retreats home">
       <span
         className={cn(
-          "grid size-10 place-items-center transition-colors duration-500",
+          "grid size-16 shrink-0 place-items-center transition-colors duration-500 md:size-20",
           light ? "bg-transparent" : "bg-forest",
         )}
       >
-        <img src="/images/brand.png" alt="" className="size-9" />
+        <img src="/images/brand.png" alt="" className="size-[3.6rem] md:size-[4.5rem]" />
       </span>
-      <span className="leading-none">
+      <span className="whitespace-nowrap leading-none">
         <span className="block font-display text-2xl tracking-tight">Rachel's Retreats</span>
         <span className="eyebrow mt-1 block text-[0.55rem] opacity-70">by Rachel's Farm</span>
       </span>
@@ -63,7 +63,9 @@ export function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const light = !solid || open;
+  const forceSolid = pathname === "/plan";
+  const isSolid = solid || forceSolid;
+  const light = !isSolid || open;
 
   return (
     <>
@@ -72,14 +74,14 @@ export function Header() {
         transition={{ duration: 0.45, ease: EASE }}
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-colors duration-500",
-          solid && !open
+          isSolid && !open
             ? "bg-ivory/90 text-ink shadow-[0_1px_0_0_var(--color-border)] backdrop-blur-md"
             : "bg-gradient-to-b from-ink/50 to-transparent text-ivory",
         )}
       >
         <div className="container-luxe flex h-20 items-center justify-between gap-6 md:h-24">
           <Logo light={light} />
-          <nav className="hidden items-center gap-8 lg:flex" aria-label="Main">
+          <nav className="hidden items-center gap-8 whitespace-nowrap xl:flex" aria-label="Main">
             {nav.slice(0, 4).map((item) => (
               <Link
                 key={item.to}
@@ -143,7 +145,10 @@ export function Header() {
             <div className="container-luxe grid min-h-full gap-12 pb-12 pt-32 lg:grid-cols-[1.2fr_1fr] lg:pt-36">
               <div className="flex flex-col justify-between gap-12">
                 <ul className="space-y-1">
-                  {[{ to: "/", label: "Home", image: "/images/buchlyvie.webp" } as const, ...nav].map((item, i) => (
+                  {[
+                    { to: "/", label: "Home", image: "/images/buchlyvie.webp" } as const,
+                    ...nav,
+                  ].map((item, i) => (
                     <li key={item.to} className="overflow-hidden">
                       <motion.div
                         initial={{ y: "100%" }}
@@ -247,7 +252,11 @@ export function Footer() {
           <ul className="space-y-3 text-sm">
             {venues.map((v) => (
               <li key={v.slug}>
-                <Link to="/venues/$slug" params={{ slug: v.slug }} className="link-draw pb-0.5 hover:text-ivory">
+                <Link
+                  to="/venues/$slug"
+                  params={{ slug: v.slug }}
+                  className="link-draw pb-0.5 hover:text-ivory"
+                >
                   {v.name}
                 </Link>
               </li>
@@ -258,7 +267,10 @@ export function Footer() {
           <p className="eyebrow mb-5 text-brass">Contact</p>
           <ul className="space-y-4 text-sm">
             <li>
-              <a href={`mailto:${contact.email}`} className="flex items-center gap-3 hover:text-ivory">
+              <a
+                href={`mailto:${contact.email}`}
+                className="flex items-center gap-3 hover:text-ivory"
+              >
                 <Mail className="size-4 text-brass" /> {contact.email}
               </a>
             </li>

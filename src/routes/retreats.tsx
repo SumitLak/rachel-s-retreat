@@ -19,7 +19,8 @@ export const Route = createFileRoute("/retreats")({
       { title: "Find a retreat — Rachel's Retreats" },
       {
         name: "description",
-        content: "Join a retreat around the things you love: yoga, creativity, food, golf and Scottish adventure.",
+        content:
+          "Join a retreat around the things you love: yoga, creativity, food, golf and Scottish adventure.",
       },
     ],
   }),
@@ -32,7 +33,10 @@ const inputCls =
 function RetreatsPage() {
   const { retreat } = Route.useSearch();
   const [filter, setFilter] = useState<string>("all");
-  const shown = useMemo(() => retreats.filter((r) => filter === "all" || r.typeId === filter), [filter]);
+  const shown = useMemo(
+    () => retreats.filter((r) => filter === "all" || r.typeId === filter),
+    [filter],
+  );
 
   const [form, setForm] = useState({
     which: retreats.find((r) => r.id === retreat)?.title ?? "Help me find a retreat",
@@ -54,7 +58,10 @@ function RetreatsPage() {
   const mailto = `mailto:${contact.email}?subject=${encodeURIComponent(`Guest enquiry: ${form.which}`)}&body=${encodeURIComponent(body)}`;
   const ready = form.name.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email);
 
-  const tabs = [{ id: "all", label: "All retreats" }, ...experiences.map((e) => ({ id: e.id as string, label: e.label }))];
+  const tabs = [
+    { id: "all", label: "All retreats" },
+    ...experiences.map((e) => ({ id: e.id as string, label: e.label })),
+  ];
 
   return (
     <>
@@ -81,7 +88,11 @@ function RetreatsPage() {
                 )}
               >
                 {filter === t.id && (
-                  <motion.span layoutId="retreat-filter" className="absolute inset-0 bg-forest" transition={{ duration: 0.45, ease: EASE }} />
+                  <motion.span
+                    layoutId="retreat-filter"
+                    className="absolute inset-0 bg-forest"
+                    transition={{ duration: 0.45, ease: EASE }}
+                  />
                 )}
                 <span className="relative">{t.label}</span>
               </button>
@@ -109,15 +120,19 @@ function RetreatsPage() {
                 <p className="mx-auto mt-4 max-w-md text-muted-foreground">
                   Try another selection, or tell us what you would like to join.
                 </p>
-                <a href="#enquire" className="link-draw mt-6 inline-block pb-1 text-sm font-semibold uppercase tracking-[0.18em]">
+                <a
+                  href="#enquire"
+                  className="link-draw mt-6 inline-block pb-1 text-sm font-semibold uppercase tracking-[0.18em]"
+                >
                   Tell us your interests
                 </a>
               </div>
             )}
           </div>
           <p className="mt-10 max-w-2xl text-sm text-muted-foreground">
-            Enquiries come to Rachel's Retreats first. We'll confirm details with the organiser before
-            you make any booking; the organiser confirms your place and collects your payment.
+            Enquiries come to Rachel's Retreats first. We'll confirm details with the organiser
+            before you make any booking; the organiser confirms your place and collects your
+            payment.
           </p>
         </div>
       </section>
@@ -129,11 +144,18 @@ function RetreatsPage() {
             lines={["Let's find", <em key="n">your next retreat.</em>]}
             intro="Ask about a listed retreat, or tell us what you have in mind. An enquiry does not reserve a place or subscribe you to marketing."
           />
-          <Reveal delay={0.15} className="bg-card p-8 shadow-[0_0_0_1px_var(--color-border)] md:p-12">
+          <Reveal
+            delay={0.15}
+            className="bg-card p-8 shadow-[0_0_0_1px_var(--color-border)] md:p-12"
+          >
             <div className="grid gap-8 md:grid-cols-2">
               <label className="md:col-span-2">
                 <span className="eyebrow text-[0.6rem] text-ink/70">Which retreat?</span>
-                <select className={inputCls} value={form.which} onChange={(e) => set("which", e.target.value)}>
+                <select
+                  className={inputCls}
+                  value={form.which}
+                  onChange={(e) => set("which", e.target.value)}
+                >
                   <option>Help me find a retreat</option>
                   {retreats.map((r) => (
                     <option key={r.id}>{r.title}</option>
@@ -142,7 +164,11 @@ function RetreatsPage() {
               </label>
               <label>
                 <span className="eyebrow text-[0.6rem] text-ink/70">I'm interested in</span>
-                <select className={inputCls} value={form.interest} onChange={(e) => set("interest", e.target.value)}>
+                <select
+                  className={inputCls}
+                  value={form.interest}
+                  onChange={(e) => set("interest", e.target.value)}
+                >
                   <option value="">Choose one</option>
                   {experiences.map((e) => (
                     <option key={e.id}>{e.label}</option>
@@ -153,19 +179,39 @@ function RetreatsPage() {
               </label>
               <label>
                 <span className="eyebrow text-[0.6rem] text-ink/70">Where or when?</span>
-                <input className={inputCls} value={form.when} onChange={(e) => set("when", e.target.value)} />
+                <input
+                  className={inputCls}
+                  value={form.when}
+                  onChange={(e) => set("when", e.target.value)}
+                />
               </label>
               <label>
                 <span className="eyebrow text-[0.6rem] text-ink/70">Your name *</span>
-                <input className={inputCls} autoComplete="name" value={form.name} onChange={(e) => set("name", e.target.value)} />
+                <input
+                  className={inputCls}
+                  autoComplete="name"
+                  value={form.name}
+                  onChange={(e) => set("name", e.target.value)}
+                />
               </label>
               <label>
                 <span className="eyebrow text-[0.6rem] text-ink/70">Email address *</span>
-                <input type="email" className={inputCls} autoComplete="email" value={form.email} onChange={(e) => set("email", e.target.value)} />
+                <input
+                  type="email"
+                  className={inputCls}
+                  autoComplete="email"
+                  value={form.email}
+                  onChange={(e) => set("email", e.target.value)}
+                />
               </label>
               <label className="md:col-span-2">
                 <span className="eyebrow text-[0.6rem] text-ink/70">Your question (optional)</span>
-                <textarea rows={3} className={inputCls} value={form.question} onChange={(e) => set("question", e.target.value)} />
+                <textarea
+                  rows={3}
+                  className={inputCls}
+                  value={form.question}
+                  onChange={(e) => set("question", e.target.value)}
+                />
               </label>
             </div>
             <div className="mt-10 flex flex-wrap items-center gap-6">
@@ -179,7 +225,9 @@ function RetreatsPage() {
               >
                 <Mail className="size-4" /> Send my enquiry
               </a>
-              <p className="text-xs text-muted-foreground">Opens your email app with the details filled in.</p>
+              <p className="text-xs text-muted-foreground">
+                Opens your email app with the details filled in.
+              </p>
             </div>
           </Reveal>
         </div>
@@ -187,7 +235,11 @@ function RetreatsPage() {
 
       <section className="py-24 text-center md:py-32">
         <div className="container-luxe">
-          <SectionHeading align="center" eyebrow="Organising your own?" lines={["Host a retreat", <em key="w">with us.</em>]} />
+          <SectionHeading
+            align="center"
+            eyebrow="Organising your own?"
+            lines={["Host a retreat", <em key="w">with us.</em>]}
+          />
           <Reveal delay={0.2} className="mt-10">
             <ButtonLink to="/host">How hosting works</ButtonLink>
           </Reveal>

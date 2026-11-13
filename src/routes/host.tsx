@@ -40,7 +40,9 @@ function Faq({ q, a, i }: { q: string; a: string; i: number }) {
         className="flex w-full items-center justify-between gap-6 py-7 text-left"
       >
         <span className="font-display text-2xl md:text-3xl">{q}</span>
-        <Plus className={cn("size-5 shrink-0 transition-transform duration-300", open && "rotate-45")} />
+        <Plus
+          className={cn("size-5 shrink-0 transition-transform duration-300", open && "rotate-45")}
+        />
       </button>
       <motion.div
         initial={false}
@@ -106,7 +108,10 @@ function HostPage() {
 
       <section className="bg-stone py-28 md:py-36">
         <div className="container-luxe mb-16">
-          <SectionHeading eyebrow="Space for your ideas" lines={["Every kind of", <em key="g">gathering.</em>]} />
+          <SectionHeading
+            eyebrow="Space for your ideas"
+            lines={["Every kind of", <em key="g">gathering.</em>]}
+          />
         </div>
         <ExperienceSelector />
       </section>

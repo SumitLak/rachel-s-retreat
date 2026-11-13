@@ -6,13 +6,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Expand, Pause, Play, X } from "luc
 import { cn } from "@/lib/utils";
 import { EASE, Reveal, SplitLines } from "@/components/motion";
 import { ButtonLink } from "@/components/ui-luxe";
-import {
-  experiences,
-  heroSlides,
-  type GalleryImage,
-  type Retreat,
-  type Venue,
-} from "@/data/site";
+import { experiences, heroSlides, type GalleryImage, type Retreat, type Venue } from "@/data/site";
 
 const SLIDE_MS = 7000;
 
@@ -35,7 +29,11 @@ export function HeroSlider() {
   }, []);
 
   return (
-    <section className="grain relative h-[100svh] min-h-[640px] overflow-hidden bg-ink text-ivory" aria-roledescription="carousel" aria-label="Featured venues">
+    <section
+      className="grain relative flex min-h-[100svh] flex-col overflow-hidden bg-ink text-ivory"
+      aria-roledescription="carousel"
+      aria-label="Featured venues"
+    >
       <AnimatePresence initial={false}>
         <motion.div
           key={slide.image}
@@ -55,28 +53,30 @@ export function HeroSlider() {
       </AnimatePresence>
       <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-ink/45" />
 
-      <div className="container-luxe relative z-10 flex h-full flex-col justify-end pb-32 md:pb-36">
-        <motion.p
-          className="eyebrow mb-8 flex items-center gap-4 text-brass"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
+      <div className="container-luxe relative z-10 flex flex-1 flex-col justify-end pb-32 pt-32 md:pb-36 md:pt-36">
+        <p
+          className="animate-fade-up eyebrow mb-8 flex items-center gap-4 text-brass"
+          style={{ animationDelay: "200ms" }}
         >
           <span className="h-px w-10 bg-current" aria-hidden />
           Private venues · Personal hospitality
-        </motion.p>
+        </p>
         <SplitLines
           as="h1"
           animateOnMount
           delay={0.35}
-          className="max-w-5xl text-[3.4rem] leading-[0.95] sm:text-7xl md:text-8xl lg:text-[8.5rem]"
-          lines={["Bring your people.", <em key="w" className="font-light">We'll take care</em>, "of the rest."]}
+          className="max-w-5xl text-[clamp(2.75rem,min(9vw,10.5vh),8.5rem)] leading-[0.95]"
+          lines={[
+            "Bring your people.",
+            <em key="w" className="font-light">
+              We'll take care
+            </em>,
+            "of the rest.",
+          ]}
         />
-        <motion.div
-          className="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: EASE, delay: 0.9 }}
+        <div
+          className="animate-fade-up mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between"
+          style={{ animationDelay: "900ms" }}
         >
           <div>
             <p className="max-w-md text-lg leading-relaxed text-ivory/85">
@@ -92,7 +92,7 @@ export function HeroSlider() {
               </ButtonLink>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Slide controls */}
@@ -158,20 +158,22 @@ export function HeroSlider() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Infinite marquee strip                                              */
+/* Static destinations strip                                           */
 /* ------------------------------------------------------------------ */
-export function Marquee({ items }: { items: string[] }) {
-  const row = [...items, ...items];
+export function DestinationStrip({ items }: { items: string[] }) {
   return (
-    <div className="overflow-hidden border-y border-border bg-stone py-6" aria-hidden>
-      <div className="animate-marquee flex w-max gap-14 whitespace-nowrap">
-        {[...row, ...row].map((t, i) => (
-          <span key={i} className="flex items-center gap-14 font-display text-3xl italic text-forest md:text-4xl">
-            {t}
-            <span className="size-1.5 rotate-45 bg-brass" />
-          </span>
+    <div className="border-b border-border bg-stone py-6 md:py-7">
+      <ul
+        className="container-luxe flex flex-wrap items-center justify-center gap-x-6 gap-y-3 md:gap-x-12"
+        aria-label="Destinations"
+      >
+        {items.map((t, i) => (
+          <li key={t} className="flex items-center gap-6 md:gap-12">
+            {i > 0 && <span className="size-1.5 rotate-45 bg-brass" aria-hidden />}
+            <span className="font-display text-2xl italic text-forest md:text-4xl">{t}</span>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
@@ -179,7 +181,15 @@ export function Marquee({ items }: { items: string[] }) {
 /* ------------------------------------------------------------------ */
 /* Venue card + editorial carousel                                     */
 /* ------------------------------------------------------------------ */
-export function VenueCard({ venue, className, sizes = "tall" }: { venue: Venue; className?: string; sizes?: "tall" | "wide" }) {
+export function VenueCard({
+  venue,
+  className,
+  sizes = "tall",
+}: {
+  venue: Venue;
+  className?: string;
+  sizes?: "tall" | "wide";
+}) {
   return (
     <Link
       to="/venues/$slug"
@@ -187,7 +197,12 @@ export function VenueCard({ venue, className, sizes = "tall" }: { venue: Venue; 
       className={cn("group block", className)}
       draggable={false}
     >
-      <div className={cn("relative overflow-hidden bg-stone", sizes === "tall" ? "aspect-[4/5]" : "aspect-[4/3]")}>
+      <div
+        className={cn(
+          "relative overflow-hidden bg-stone",
+          sizes === "tall" ? "aspect-[4/5]" : "aspect-[4/3]",
+        )}
+      >
         <img
           src={venue.image}
           alt={venue.name}
@@ -210,7 +225,9 @@ export function VenueCard({ venue, className, sizes = "tall" }: { venue: Venue; 
       </div>
       <div className="pt-5">
         <p className="eyebrow text-[0.6rem] text-muted-foreground">{venue.location}</p>
-        <h3 className="mt-2 text-3xl transition-colors group-hover:text-forest md:text-4xl">{venue.name}</h3>
+        <h3 className="mt-2 text-3xl transition-colors group-hover:text-forest md:text-4xl">
+          {venue.name}
+        </h3>
         <p className="mt-1 font-display text-lg italic text-muted-foreground">{venue.tagline}</p>
         <p className="mt-3 text-sm text-ink/80">{venue.capacity}</p>
       </div>
@@ -263,7 +280,13 @@ export function ArrowButtons({
   );
   return (
     <div className="flex gap-3">
-      <button type="button" className={cls} onClick={onPrev} disabled={!canPrev} aria-label="Previous">
+      <button
+        type="button"
+        className={cls}
+        onClick={onPrev}
+        disabled={!canPrev}
+        aria-label="Previous"
+      >
         <ArrowLeft className="size-5" />
       </button>
       <button type="button" className={cls} onClick={onNext} disabled={!canNext} aria-label="Next">
@@ -274,7 +297,11 @@ export function ArrowButtons({
 }
 
 export function VenueCarousel({ venues, header }: { venues: Venue[]; header?: ReactNode }) {
-  const { ref, api, canPrev, canNext, progress } = useEmblaNav({ align: "start", dragFree: true, containScroll: "trimSnaps" });
+  const { ref, api, canPrev, canNext, progress } = useEmblaNav({
+    align: "start",
+    dragFree: true,
+    containScroll: "trimSnaps",
+  });
   return (
     <div>
       <div className="container-luxe flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
@@ -336,8 +363,15 @@ function StoryStep({
   }, [inView, index, onActive]);
   return (
     <div ref={ref} className="flex min-h-[70vh] items-center py-10 lg:min-h-[90vh]">
-      <div className={cn("transition-opacity duration-700", active ? "opacity-100" : "lg:opacity-30")}>
-        <img src={step.image} alt="" className="mb-8 aspect-[4/3] w-full object-cover lg:hidden" loading="lazy" />
+      <div
+        className={cn("transition-opacity duration-700", active ? "opacity-100" : "lg:opacity-30")}
+      >
+        <img
+          src={step.image}
+          alt=""
+          className="mb-8 aspect-[4/3] w-full object-cover lg:hidden"
+          loading="lazy"
+        />
         <p className="font-display text-7xl italic text-brass md:text-8xl">{step.n}</p>
         <h3 className="mt-4 text-4xl md:text-5xl">{step.title}</h3>
         <p className="mt-5 max-w-md text-lg leading-relaxed text-muted-foreground">{step.body}</p>
@@ -378,7 +412,10 @@ export function ScrollStory({
                 Step {current.n} of {String(steps.length).padStart(2, "0")}
               </span>
               <span className="relative h-px flex-1 bg-ivory/30">
-                <motion.span className="absolute inset-0 origin-left bg-ivory" style={{ scaleX: bar }} />
+                <motion.span
+                  className="absolute inset-0 origin-left bg-ivory"
+                  style={{ scaleX: bar }}
+                />
               </span>
             </div>
           </div>
@@ -415,13 +452,20 @@ export function ExperienceSelector() {
               onMouseEnter={() => setActive(i)}
               className="group flex w-full items-baseline gap-6 border-b border-border py-6 text-left"
             >
-              <span className={cn("eyebrow text-[0.6rem] transition-colors", i === active ? "text-brass" : "text-muted-foreground")}>
+              <span
+                className={cn(
+                  "eyebrow text-[0.6rem] transition-colors",
+                  i === active ? "text-brass" : "text-muted-foreground",
+                )}
+              >
                 0{i + 1}
               </span>
               <span
                 className={cn(
                   "font-display text-3xl transition-all duration-500 md:text-4xl",
-                  i === active ? "translate-x-2 italic text-ink" : "text-ink/45 group-hover:text-ink/80",
+                  i === active
+                    ? "translate-x-2 italic text-ink"
+                    : "text-ink/45 group-hover:text-ink/80",
                 )}
               >
                 {e.label}
@@ -489,7 +533,13 @@ export function RetreatCard({ retreat }: { retreat: Retreat }) {
         <p className="mt-2 font-display text-lg italic text-muted-foreground">{retreat.venue}</p>
         <p className="mt-5 leading-relaxed text-ink/80">{retreat.body}</p>
         <div className="mt-auto pt-8">
-          <ButtonLink to="/retreats" search={{ retreat: retreat.id }} hash="enquire" variant="text" className="py-0">
+          <ButtonLink
+            to="/retreats"
+            search={{ retreat: retreat.id }}
+            hash="enquire"
+            variant="text"
+            className="py-0"
+          >
             Enquire
           </ButtonLink>
         </div>
@@ -518,7 +568,12 @@ export function Gallery({ images, venueName }: { images: GalleryImage[]; venueNa
                   className="group relative block aspect-[16/10] w-full overflow-hidden bg-stone md:aspect-[16/8]"
                   aria-label={`Open ${img.caption} fullscreen`}
                 >
-                  <img src={img.src} alt={img.alt} loading={i === 0 ? "eager" : "lazy"} className="h-full w-full object-cover" />
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    className="h-full w-full object-cover"
+                  />
                   <span className="absolute right-5 top-5 grid size-11 place-items-center rounded-full bg-ivory/90 text-ink opacity-0 transition-opacity group-hover:opacity-100">
                     <Expand className="size-4" />
                   </span>
@@ -531,14 +586,22 @@ export function Gallery({ images, venueName }: { images: GalleryImage[]; venueNa
           <p className="font-display text-xl italic md:text-2xl">
             {images[selected]?.caption}
             {images[selected]?.shared && (
-              <span className="eyebrow ml-3 not-italic text-[0.55rem] text-ivory/70">Rachel's Retreats hospitality</span>
+              <span className="eyebrow ml-3 not-italic text-[0.55rem] text-ivory/70">
+                Rachel's Retreats hospitality
+              </span>
             )}
           </p>
           <div className="pointer-events-auto flex items-center gap-5">
             <span className="text-xs tabular-nums">
               {selected + 1} / {images.length}
             </span>
-            <ArrowButtons light onPrev={() => api?.scrollPrev()} onNext={() => api?.scrollNext()} canPrev={canPrev} canNext={canNext} />
+            <ArrowButtons
+              light
+              onPrev={() => api?.scrollPrev()}
+              onNext={() => api?.scrollNext()}
+              canPrev={canPrev}
+              canNext={canNext}
+            />
           </div>
         </div>
       </div>
@@ -552,7 +615,9 @@ export function Gallery({ images, venueName }: { images: GalleryImage[]; venueNa
             aria-current={i === selected}
             className={cn(
               "relative h-20 w-28 shrink-0 overflow-hidden transition-opacity duration-300",
-              i === selected ? "opacity-100 ring-1 ring-ink ring-offset-2 ring-offset-ivory" : "opacity-50 hover:opacity-90",
+              i === selected
+                ? "opacity-100 ring-1 ring-ink ring-offset-2 ring-offset-ivory"
+                : "opacity-50 hover:opacity-90",
             )}
           >
             <img src={img.src} alt="" className="h-full w-full object-cover" loading="lazy" />
@@ -636,10 +701,20 @@ function Lightbox({
                 transition={{ duration: 0.25 }}
               />
             </AnimatePresence>
-            <button type="button" onClick={() => go(-1)} className="absolute left-4 grid size-12 place-items-center rounded-full border border-ivory/30 hover:bg-ivory hover:text-ink md:left-8" aria-label="Previous image">
+            <button
+              type="button"
+              onClick={() => go(-1)}
+              className="absolute left-4 grid size-12 place-items-center rounded-full border border-ivory/30 hover:bg-ivory hover:text-ink md:left-8"
+              aria-label="Previous image"
+            >
               <ArrowLeft className="size-5" />
             </button>
-            <button type="button" onClick={() => go(1)} className="absolute right-4 grid size-12 place-items-center rounded-full border border-ivory/30 hover:bg-ivory hover:text-ink md:right-8" aria-label="Next image">
+            <button
+              type="button"
+              onClick={() => go(1)}
+              className="absolute right-4 grid size-12 place-items-center rounded-full border border-ivory/30 hover:bg-ivory hover:text-ink md:right-8"
+              aria-label="Next image"
+            >
               <ArrowRight className="size-5" />
             </button>
           </div>

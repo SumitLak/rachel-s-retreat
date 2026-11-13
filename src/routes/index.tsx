@@ -4,12 +4,13 @@ import { ButtonLink, ClosingCTA, SectionHeading } from "@/components/ui-luxe";
 import {
   ExperienceSelector,
   HeroSlider,
-  Marquee,
+  DestinationStrip,
   RetreatCard,
   ScrollStory,
   VenueCarousel,
 } from "@/components/sections";
 import { hostSteps, retreats, venues } from "@/data/site";
+import { PlannerTeaser } from "@/components/planner/PlannerTeaser";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,16 +27,49 @@ export const Route = createFileRoute("/")({
 });
 
 const pillars = [
-  { title: "Private settings", body: "Estates, villas and country houses reserved for your group." },
-  { title: "Chefs & hosts", body: "Menus planned around your guests, and hosts who keep days running smoothly." },
-  { title: "Thoughtful experiences", body: "Local excursions, movement and specialist sessions around your programme." },
-  { title: "One team around you", body: "Planners, event managers, hosts and chefs working alongside you." },
+  {
+    title: "Private settings",
+    body: "Estates, villas and country houses reserved for your group.",
+  },
+  {
+    title: "Chefs & hosts",
+    body: "Menus planned around your guests, and hosts who keep days running smoothly.",
+  },
+  {
+    title: "Thoughtful experiences",
+    body: "Local excursions, movement and specialist sessions around your programme.",
+  },
+  {
+    title: "One team around you",
+    body: "Planners, event managers, hosts and chefs working alongside you.",
+  },
 ];
 
 function Home() {
   return (
     <>
       <HeroSlider />
+      <DestinationStrip items={["Scotland", "England", "Ireland", "Italy", "France"]} />
+      <section
+        className="border-b border-border py-16 md:py-20"
+        aria-label="The collection in numbers"
+      >
+        <div className="container-luxe grid grid-cols-2 gap-y-12 md:grid-cols-4">
+          {[
+            { n: 7, s: "", label: "Venues in the collection" },
+            { n: 5, s: "", label: "Countries" },
+            { n: 400, s: "", label: "Acres at The Manor House" },
+            { n: 1000, s: "", label: "Acres at Wild River Lodge" },
+          ].map((stat, i) => (
+            <Reveal key={stat.label} delay={i * 0.08}>
+              <p className="font-display text-6xl text-forest md:text-7xl">
+                <Counter to={stat.n} suffix={stat.s} />
+              </p>
+              <p className="eyebrow mt-3 text-[0.6rem] text-muted-foreground">{stat.label}</p>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
       {/* Introduction */}
       <section className="py-28 md:py-40">
@@ -43,17 +77,23 @@ function Home() {
           <div>
             <SectionHeading
               eyebrow="This is Rachel's Retreats"
-              lines={["A beautiful setting.", <em key="m" className="text-forest">A whole lot more.</em>]}
+              lines={[
+                "A beautiful setting.",
+                <em key="m" className="text-forest">
+                  A whole lot more.
+                </em>,
+              ]}
               intro={
                 <>
                   <p>
-                    You bring the programme and market and sell your places. We coordinate the agreed
-                    venue, catering, hosting, experiences and scheduled transfers around your retreat.
+                    You bring the programme and market and sell your places. We coordinate the
+                    agreed venue, catering, hosting, experiences and scheduled transfers around your
+                    retreat.
                   </p>
                   <p className="mt-5">
-                    For yoga teachers, artists, company organisers and communities, it's space to focus
-                    on what you came to do. For guests, it's a chance to join a retreat that feels right
-                    for you.
+                    For yoga teachers, artists, company organisers and communities, it's space to
+                    focus on what you came to do. For guests, it's a chance to join a retreat that
+                    feels right for you.
                   </p>
                 </>
               }
@@ -79,25 +119,7 @@ function Home() {
             />
           </div>
         </div>
-
-        <div className="container-luxe mt-24 grid grid-cols-2 gap-y-12 border-t border-border pt-14 md:grid-cols-4">
-          {[
-            { n: 7, s: "", label: "Venues in the collection" },
-            { n: 5, s: "", label: "Countries" },
-            { n: 400, s: "", label: "Acres at The Manor House" },
-            { n: 1000, s: "", label: "Acres at Wild River Lodge" },
-          ].map((stat, i) => (
-            <Reveal key={stat.label} delay={i * 0.08}>
-              <p className="font-display text-6xl text-forest md:text-7xl">
-                <Counter to={stat.n} suffix={stat.s} />
-              </p>
-              <p className="eyebrow mt-3 text-[0.6rem] text-muted-foreground">{stat.label}</p>
-            </Reveal>
-          ))}
-        </div>
       </section>
-
-      <Marquee items={["Scotland", "England", "Ireland", "Italy", "France"]} />
 
       {/* Collection carousel */}
       <section className="py-28 md:py-40">
@@ -119,7 +141,12 @@ function Home() {
           <SectionHeading
             light
             eyebrow="For the people who bring people together"
-            lines={["You lead the retreat.", <em key="w" className="text-brass">We look after the rest.</em>]}
+            lines={[
+              "You lead the retreat.",
+              <em key="w" className="text-brass">
+                We look after the rest.
+              </em>,
+            ]}
             intro="Menus planned around your guests. Rooms ready for their arrival. The right people, places and experiences brought together with care."
           />
           <div className="mt-20 grid gap-px bg-ivory/15 sm:grid-cols-2 lg:grid-cols-4">
@@ -167,15 +194,25 @@ function Home() {
         <ExperienceSelector />
       </section>
 
+      <PlannerTeaser />
+
       {/* Scotland parallax band */}
       <section className="grain relative flex min-h-[90vh] items-center overflow-hidden bg-ink text-ivory">
-        <ParallaxImage src="/images/kelpies.webp" alt="The Kelpies, Falkirk" className="absolute inset-0" strength={16} />
+        <ParallaxImage
+          src="/images/kelpies.webp"
+          alt="The Kelpies, Falkirk"
+          className="absolute inset-0"
+          strength={16}
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/40 to-transparent" />
         <div className="container-luxe relative z-10 py-28">
           <Reveal>
             <p className="eyebrow mb-6 text-brass">A place to come back to</p>
           </Reveal>
-          <SplitLines lines={["See Scotland.", <em key="f">Feel at home.</em>]} className="text-6xl md:text-8xl" />
+          <SplitLines
+            lines={["See Scotland.", <em key="f">Feel at home.</em>]}
+            className="text-6xl md:text-8xl"
+          />
           <Reveal delay={0.25}>
             <p className="mt-8 max-w-md text-lg leading-relaxed text-ivory/80">
               Castles, lochs and a little adventure. Explore by day, then return to good food and a

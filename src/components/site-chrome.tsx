@@ -6,11 +6,17 @@ import { cn } from "@/lib/utils";
 import { contact, countries, venues } from "@/data/site";
 import { EASE, getLenis } from "@/components/motion";
 
+// Primary navigation, as agreed with Daniel (matches the original site).
 const nav = [
-  { to: "/venues", label: "The collection", image: "/images/villa-senesi.webp" },
+  { to: "/venues", label: "Our venues", image: "/images/villa-senesi.webp" },
   { to: "/host", label: "Host a retreat", image: "/images/studio.webp" },
   { to: "/retreats", label: "Find a retreat", image: "/images/stirling-castle.webp" },
-  { to: "/how-we-help", label: "Our hospitality", image: "/images/food-gnocchi.webp" },
+  { to: "/how-we-help", label: "How we help", image: "/images/food-gnocchi.webp" },
+  { to: "/guides", label: "Guides & FAQs", image: "/images/buchlyvie-lodges.webp" },
+] as const;
+
+// Extra pages shown in the full-screen menu and footer only.
+const moreNav = [
   { to: "/discover-scotland", label: "Discover Scotland", image: "/images/kelpies.webp" },
 ] as const;
 
@@ -36,15 +42,12 @@ function Logo({ light }: { light: boolean }) {
 export function Header() {
   const { scrollY } = useScroll();
   const [solid, setSolid] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
   const [preview, setPreview] = useState<string>(nav[0].image);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useMotionValueEvent(scrollY, "change", (y) => {
-    const prev = scrollY.getPrevious() ?? 0;
     setSolid(y > 80);
-    setHidden(y > 400 && y > prev);
   });
 
   useEffect(() => setOpen(false), [pathname]);
@@ -69,9 +72,7 @@ export function Header() {
 
   return (
     <>
-      <motion.header
-        animate={{ y: hidden && !open ? "-100%" : "0%" }}
-        transition={{ duration: 0.45, ease: EASE }}
+      <header
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-colors duration-500",
           isSolid && !open
@@ -81,12 +82,15 @@ export function Header() {
       >
         <div className="container-luxe flex h-20 items-center justify-between gap-6 md:h-24">
           <Logo light={light} />
-          <nav className="hidden items-center gap-8 whitespace-nowrap xl:flex" aria-label="Main">
-            {nav.slice(0, 4).map((item) => (
+          <nav
+            className="hidden items-center gap-6 whitespace-nowrap xl:flex 2xl:gap-8"
+            aria-label="Main"
+          >
+            {nav.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
-                className="link-draw pb-1 text-[0.72rem] font-semibold uppercase tracking-[0.2em]"
+                className="link-draw pb-1 text-[0.7rem] font-semibold uppercase tracking-[0.16em]"
                 activeProps={{ className: "bg-[length:100%_1px]!" }}
               >
                 {item.label}
@@ -126,7 +130,7 @@ export function Header() {
             </button>
           </div>
         </div>
-      </motion.header>
+      </header>
 
       <AnimatePresence>
         {open && (
@@ -233,7 +237,7 @@ export function Footer() {
         <div>
           <p className="eyebrow mb-5 text-brass">Explore</p>
           <ul className="space-y-3 text-sm">
-            {nav.map((n) => (
+            {[...nav, ...moreNav].map((n) => (
               <li key={n.to}>
                 <Link to={n.to} className="link-draw pb-0.5 hover:text-ivory">
                   {n.label}

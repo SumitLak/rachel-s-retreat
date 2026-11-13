@@ -15,6 +15,8 @@ import { Route as HostRouteImport } from './routes/host'
 import { Route as HowWeHelpRouteImport } from './routes/how-we-help'
 import { Route as PlanRouteImport } from './routes/plan'
 import { Route as RetreatsRouteImport } from './routes/retreats'
+import { Route as GuidesIndexRouteImport } from './routes/guides.index'
+import { Route as GuidesSlugRouteImport } from './routes/guides.$slug'
 import { Route as VenuesIndexRouteImport } from './routes/venues.index'
 import { Route as VenuesSlugRouteImport } from './routes/venues.$slug'
 
@@ -48,6 +50,16 @@ const RetreatsRoute = RetreatsRouteImport.update({
   path: '/retreats',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesIndexRoute = GuidesIndexRouteImport.update({
+  id: '/guides/',
+  path: '/guides/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesSlugRoute = GuidesSlugRouteImport.update({
+  id: '/guides/$slug',
+  path: '/guides/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VenuesIndexRoute = VenuesIndexRouteImport.update({
   id: '/venues/',
   path: '/venues/',
@@ -66,7 +78,9 @@ export interface FileRoutesByFullPath {
   '/how-we-help': typeof HowWeHelpRoute
   '/plan': typeof PlanRoute
   '/retreats': typeof RetreatsRoute
+  '/guides/$slug': typeof GuidesSlugRoute
   '/venues/$slug': typeof VenuesSlugRoute
+  '/guides/': typeof GuidesIndexRoute
   '/venues/': typeof VenuesIndexRoute
 }
 export interface FileRoutesByTo {
@@ -76,7 +90,9 @@ export interface FileRoutesByTo {
   '/how-we-help': typeof HowWeHelpRoute
   '/plan': typeof PlanRoute
   '/retreats': typeof RetreatsRoute
+  '/guides/$slug': typeof GuidesSlugRoute
   '/venues/$slug': typeof VenuesSlugRoute
+  '/guides': typeof GuidesIndexRoute
   '/venues': typeof VenuesIndexRoute
 }
 export interface FileRoutesById {
@@ -87,7 +103,9 @@ export interface FileRoutesById {
   '/how-we-help': typeof HowWeHelpRoute
   '/plan': typeof PlanRoute
   '/retreats': typeof RetreatsRoute
+  '/guides/$slug': typeof GuidesSlugRoute
   '/venues/$slug': typeof VenuesSlugRoute
+  '/guides/': typeof GuidesIndexRoute
   '/venues/': typeof VenuesIndexRoute
 }
 export interface FileRouteTypes {
@@ -99,7 +117,9 @@ export interface FileRouteTypes {
     | '/how-we-help'
     | '/plan'
     | '/retreats'
+    | '/guides/$slug'
     | '/venues/$slug'
+    | '/guides/'
     | '/venues/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -109,7 +129,9 @@ export interface FileRouteTypes {
     | '/how-we-help'
     | '/plan'
     | '/retreats'
+    | '/guides/$slug'
     | '/venues/$slug'
+    | '/guides'
     | '/venues'
   id:
     | '__root__'
@@ -119,7 +141,9 @@ export interface FileRouteTypes {
     | '/how-we-help'
     | '/plan'
     | '/retreats'
+    | '/guides/$slug'
     | '/venues/$slug'
+    | '/guides/'
     | '/venues/'
   fileRoutesById: FileRoutesById
 }
@@ -130,7 +154,9 @@ export interface RootRouteChildren {
   HowWeHelpRoute: typeof HowWeHelpRoute
   PlanRoute: typeof PlanRoute
   RetreatsRoute: typeof RetreatsRoute
+  GuidesSlugRoute: typeof GuidesSlugRoute
   VenuesSlugRoute: typeof VenuesSlugRoute
+  GuidesIndexRoute: typeof GuidesIndexRoute
   VenuesIndexRoute: typeof VenuesIndexRoute
 }
 
@@ -178,6 +204,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RetreatsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides/': {
+      id: '/guides/'
+      path: '/guides'
+      fullPath: '/guides/'
+      preLoaderRoute: typeof GuidesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/$slug': {
+      id: '/guides/$slug'
+      path: '/guides/$slug'
+      fullPath: '/guides/$slug'
+      preLoaderRoute: typeof GuidesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/venues/': {
       id: '/venues/'
       path: '/venues'
@@ -202,7 +242,9 @@ const rootRouteChildren: RootRouteChildren = {
   HowWeHelpRoute: HowWeHelpRoute,
   PlanRoute: PlanRoute,
   RetreatsRoute: RetreatsRoute,
+  GuidesSlugRoute: GuidesSlugRoute,
   VenuesSlugRoute: VenuesSlugRoute,
+  GuidesIndexRoute: GuidesIndexRoute,
   VenuesIndexRoute: VenuesIndexRoute,
 }
 export const routeTree = rootRouteImport

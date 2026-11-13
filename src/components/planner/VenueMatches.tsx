@@ -23,7 +23,7 @@ export function VenueMatchCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease, delay: i * 0.07 }}
       className={cn(
-        "grid overflow-hidden bg-card shadow-[0_0_0_1px_var(--color-border)]",
+        "grid overflow-hidden rounded-[1.25rem] bg-card shadow-[0_0_0_1px_var(--color-border)]",
         compact ? "grid-cols-[6rem_1fr]" : "grid-cols-[8rem_1fr] sm:grid-cols-[11rem_1fr]",
       )}
     >

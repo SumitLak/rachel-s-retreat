@@ -195,7 +195,7 @@ export function DestinationStrip({ items }: { items: string[] }) {
 export function VenueCard({
   venue,
   className,
-  sizes = "tall",
+  sizes = "wide",
 }: {
   venue: Venue;
   className?: string;
@@ -210,7 +210,8 @@ export function VenueCard({
     >
       <div
         className={cn(
-          "relative overflow-hidden bg-stone",
+          // Soft, rounded frame (Ryan's feedback); 4:3 keeps a whole card on a laptop screen.
+          "relative overflow-hidden rounded-[1.5rem] bg-stone [mask-image:radial-gradient(white,black)]",
           sizes === "tall" ? "aspect-[4/5]" : "aspect-[4/3]",
         )}
       >
@@ -222,11 +223,11 @@ export function VenueCard({
           className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[var(--ease-luxe)] group-hover:scale-[1.04]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
-        <span className="eyebrow absolute left-5 top-5 bg-ivory/90 px-3 py-2 text-[0.58rem] text-ink backdrop-blur">
+        <span className="eyebrow absolute left-4 top-4 rounded-full bg-ivory/90 px-3.5 py-1.5 text-[0.56rem] text-ink backdrop-blur">
           {venue.country}
         </span>
         {venue.comingSoon && (
-          <span className="eyebrow absolute right-5 top-5 bg-brass px-3 py-2 text-[0.58rem] text-ink">
+          <span className="eyebrow absolute right-4 top-4 rounded-full bg-brass px-3.5 py-1.5 text-[0.56rem] text-ink">
             Coming soon
           </span>
         )}
@@ -234,13 +235,16 @@ export function VenueCard({
           Explore venue <ArrowRight className="size-3.5" />
         </span>
       </div>
-      <div className="pt-5">
-        <p className="eyebrow text-[0.6rem] text-muted-foreground">{venue.location}</p>
-        <h3 className="mt-2 text-3xl transition-colors group-hover:text-forest md:text-4xl">
+      <div className="px-1 pt-4">
+        <p className="eyebrow text-[0.58rem] text-muted-foreground">{venue.location}</p>
+        <h3 className="mt-1.5 text-2xl leading-tight transition-colors group-hover:text-forest md:text-3xl">
           {venue.name}
         </h3>
-        <p className="mt-1 font-display text-lg italic text-muted-foreground">{venue.tagline}</p>
-        <p className="mt-3 text-sm text-ink/80">{venue.capacity}</p>
+        <p className="mt-1 text-sm text-ink/75">
+          <span className="font-display text-base italic">{venue.tagline}</span>
+          <span className="mx-2 text-ink/30">·</span>
+          {venue.capacity}
+        </p>
       </div>
     </Link>
   );
@@ -333,7 +337,7 @@ export function VenueCarousel({ venues, header }: { venues: Venue[]; header?: Re
         <div className="cursor-grab overflow-hidden active:cursor-grabbing" ref={ref}>
           <div className="flex gap-6 pl-5 md:pl-10 xl:pl-[max(3rem,calc((100vw-104rem)/2+3rem))]">
             {venues.map((v) => (
-              <div key={v.slug} className="w-[82vw] shrink-0 sm:w-[52vw] lg:w-[36vw] xl:w-[32rem]">
+              <div key={v.slug} className="w-[82vw] shrink-0 sm:w-[48vw] lg:w-[32vw] xl:w-[28rem]">
                 <VenueCard venue={v} />
               </div>
             ))}
@@ -561,7 +565,7 @@ export function ExperienceSelector({ header }: { header?: ReactNode }) {
 /* ------------------------------------------------------------------ */
 export function RetreatCard({ retreat }: { retreat: Retreat }) {
   return (
-    <article className="group grid overflow-hidden bg-card shadow-[0_1px_0_0_var(--color-border)] md:grid-cols-[0.9fr_1.1fr]">
+    <article className="group grid overflow-hidden rounded-[1.5rem] bg-card shadow-[0_0_0_1px_var(--color-border)] md:grid-cols-[0.9fr_1.1fr]">
       <div className="relative aspect-[4/3] overflow-hidden md:aspect-auto">
         <img
           src={retreat.image}
@@ -601,7 +605,7 @@ export function Gallery({ images, venueName }: { images: GalleryImage[]; venueNa
 
   return (
     <div>
-      <div className="relative">
+      <div className="relative overflow-hidden rounded-[1.5rem] [mask-image:radial-gradient(white,black)]">
         <div className="overflow-hidden" ref={ref}>
           <div className="flex">
             {images.map((img, i) => (
@@ -658,7 +662,7 @@ export function Gallery({ images, venueName }: { images: GalleryImage[]; venueNa
             aria-label={`Show image ${i + 1}: ${img.caption}`}
             aria-current={i === selected}
             className={cn(
-              "relative h-20 w-28 shrink-0 overflow-hidden transition-opacity duration-300",
+              "relative h-20 w-28 shrink-0 overflow-hidden rounded-xl transition-opacity duration-300",
               i === selected
                 ? "opacity-100 ring-1 ring-ink ring-offset-2 ring-offset-ivory"
                 : "opacity-50 hover:opacity-90",

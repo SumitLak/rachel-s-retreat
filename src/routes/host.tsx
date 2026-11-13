@@ -129,6 +129,9 @@ function HostPage() {
             {faqs.map((f, i) => (
               <Faq key={f.q} q={f.q} a={f.a} i={i} />
             ))}
+            <ButtonLink to="/guides" variant="text" className="mt-8 py-0">
+              All guides & FAQs
+            </ButtonLink>
           </Reveal>
         </div>
       </section>

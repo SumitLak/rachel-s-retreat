@@ -33,7 +33,11 @@ export function PlannerTeaser() {
           <div className="mt-10 space-y-9">
             <div>
               <p className="eyebrow mb-3 text-[0.58rem] text-ink/70">The experience</p>
-              <div role="radiogroup" aria-label="Retreat type" className="flex flex-wrap gap-2">
+              <div
+                role="radiogroup"
+                aria-label="Retreat type"
+                className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap"
+              >
                 {teaserTypes.map((t) => (
                   <Pill key={t.id} active={type === t.id} onClick={() => setType(t.id)}>
                     {t.label}
@@ -60,7 +64,11 @@ export function PlannerTeaser() {
             </div>
             <div>
               <p className="eyebrow mb-3 text-[0.58rem] text-ink/70">Destination</p>
-              <div role="radiogroup" aria-label="Destination" className="flex flex-wrap gap-2">
+              <div
+                role="radiogroup"
+                aria-label="Destination"
+                className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap"
+              >
                 <Pill active={destination === ""} onClick={() => setDestination("")}>
                   Help me choose
                 </Pill>

@@ -9,7 +9,15 @@ export type PlannerEvent =
   | "planner_venue_viewed"
   | "planner_completed"
   | "planner_enquiry_submitted"
-  | "planner_enquiry_failed";
+  | "planner_enquiry_failed"
+  // Guest (B2C) discovery events, kept separate from the organiser pipeline.
+  | "retreat_saved"
+  | "retreat_emailed"
+  | "retreat_viewed"
+  | "retreat_enquiry_submitted"
+  | "retreat_filtered"
+  // Organiser (B2B) events.
+  | "organiser_listing_submitted";
 
 type Win = Window & { rrConsent?: { analytics?: boolean }; dataLayer?: Record<string, unknown>[] };
 

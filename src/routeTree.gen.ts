@@ -13,10 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DiscoverScotlandRouteImport } from './routes/discover-scotland'
 import { Route as HostRouteImport } from './routes/host'
 import { Route as HowWeHelpRouteImport } from './routes/how-we-help'
+import { Route as ListYourRetreatRouteImport } from './routes/list-your-retreat'
 import { Route as PlanRouteImport } from './routes/plan'
-import { Route as RetreatsRouteImport } from './routes/retreats'
+import { Route as SavedRouteImport } from './routes/saved'
 import { Route as GuidesIndexRouteImport } from './routes/guides.index'
 import { Route as GuidesSlugRouteImport } from './routes/guides.$slug'
+import { Route as RetreatsIndexRouteImport } from './routes/retreats.index'
+import { Route as RetreatsSlugRouteImport } from './routes/retreats.$slug'
 import { Route as VenuesIndexRouteImport } from './routes/venues.index'
 import { Route as VenuesSlugRouteImport } from './routes/venues.$slug'
 
@@ -40,14 +43,19 @@ const HowWeHelpRoute = HowWeHelpRouteImport.update({
   path: '/how-we-help',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ListYourRetreatRoute = ListYourRetreatRouteImport.update({
+  id: '/list-your-retreat',
+  path: '/list-your-retreat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlanRoute = PlanRouteImport.update({
   id: '/plan',
   path: '/plan',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RetreatsRoute = RetreatsRouteImport.update({
-  id: '/retreats',
-  path: '/retreats',
+const SavedRoute = SavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuidesIndexRoute = GuidesIndexRouteImport.update({
@@ -58,6 +66,16 @@ const GuidesIndexRoute = GuidesIndexRouteImport.update({
 const GuidesSlugRoute = GuidesSlugRouteImport.update({
   id: '/guides/$slug',
   path: '/guides/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RetreatsIndexRoute = RetreatsIndexRouteImport.update({
+  id: '/retreats/',
+  path: '/retreats/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RetreatsSlugRoute = RetreatsSlugRouteImport.update({
+  id: '/retreats/$slug',
+  path: '/retreats/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VenuesIndexRoute = VenuesIndexRouteImport.update({
@@ -76,11 +94,14 @@ export interface FileRoutesByFullPath {
   '/discover-scotland': typeof DiscoverScotlandRoute
   '/host': typeof HostRoute
   '/how-we-help': typeof HowWeHelpRoute
+  '/list-your-retreat': typeof ListYourRetreatRoute
   '/plan': typeof PlanRoute
-  '/retreats': typeof RetreatsRoute
+  '/saved': typeof SavedRoute
   '/guides/$slug': typeof GuidesSlugRoute
+  '/retreats/$slug': typeof RetreatsSlugRoute
   '/venues/$slug': typeof VenuesSlugRoute
   '/guides/': typeof GuidesIndexRoute
+  '/retreats/': typeof RetreatsIndexRoute
   '/venues/': typeof VenuesIndexRoute
 }
 export interface FileRoutesByTo {
@@ -88,11 +109,14 @@ export interface FileRoutesByTo {
   '/discover-scotland': typeof DiscoverScotlandRoute
   '/host': typeof HostRoute
   '/how-we-help': typeof HowWeHelpRoute
+  '/list-your-retreat': typeof ListYourRetreatRoute
   '/plan': typeof PlanRoute
-  '/retreats': typeof RetreatsRoute
+  '/saved': typeof SavedRoute
   '/guides/$slug': typeof GuidesSlugRoute
+  '/retreats/$slug': typeof RetreatsSlugRoute
   '/venues/$slug': typeof VenuesSlugRoute
   '/guides': typeof GuidesIndexRoute
+  '/retreats': typeof RetreatsIndexRoute
   '/venues': typeof VenuesIndexRoute
 }
 export interface FileRoutesById {
@@ -101,11 +125,14 @@ export interface FileRoutesById {
   '/discover-scotland': typeof DiscoverScotlandRoute
   '/host': typeof HostRoute
   '/how-we-help': typeof HowWeHelpRoute
+  '/list-your-retreat': typeof ListYourRetreatRoute
   '/plan': typeof PlanRoute
-  '/retreats': typeof RetreatsRoute
+  '/saved': typeof SavedRoute
   '/guides/$slug': typeof GuidesSlugRoute
+  '/retreats/$slug': typeof RetreatsSlugRoute
   '/venues/$slug': typeof VenuesSlugRoute
   '/guides/': typeof GuidesIndexRoute
+  '/retreats/': typeof RetreatsIndexRoute
   '/venues/': typeof VenuesIndexRoute
 }
 export interface FileRouteTypes {
@@ -115,11 +142,14 @@ export interface FileRouteTypes {
     | '/discover-scotland'
     | '/host'
     | '/how-we-help'
+    | '/list-your-retreat'
     | '/plan'
-    | '/retreats'
+    | '/saved'
     | '/guides/$slug'
+    | '/retreats/$slug'
     | '/venues/$slug'
     | '/guides/'
+    | '/retreats/'
     | '/venues/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -127,11 +157,14 @@ export interface FileRouteTypes {
     | '/discover-scotland'
     | '/host'
     | '/how-we-help'
+    | '/list-your-retreat'
     | '/plan'
-    | '/retreats'
+    | '/saved'
     | '/guides/$slug'
+    | '/retreats/$slug'
     | '/venues/$slug'
     | '/guides'
+    | '/retreats'
     | '/venues'
   id:
     | '__root__'
@@ -139,11 +172,14 @@ export interface FileRouteTypes {
     | '/discover-scotland'
     | '/host'
     | '/how-we-help'
+    | '/list-your-retreat'
     | '/plan'
-    | '/retreats'
+    | '/saved'
     | '/guides/$slug'
+    | '/retreats/$slug'
     | '/venues/$slug'
     | '/guides/'
+    | '/retreats/'
     | '/venues/'
   fileRoutesById: FileRoutesById
 }
@@ -152,11 +188,14 @@ export interface RootRouteChildren {
   DiscoverScotlandRoute: typeof DiscoverScotlandRoute
   HostRoute: typeof HostRoute
   HowWeHelpRoute: typeof HowWeHelpRoute
+  ListYourRetreatRoute: typeof ListYourRetreatRoute
   PlanRoute: typeof PlanRoute
-  RetreatsRoute: typeof RetreatsRoute
+  SavedRoute: typeof SavedRoute
   GuidesSlugRoute: typeof GuidesSlugRoute
+  RetreatsSlugRoute: typeof RetreatsSlugRoute
   VenuesSlugRoute: typeof VenuesSlugRoute
   GuidesIndexRoute: typeof GuidesIndexRoute
+  RetreatsIndexRoute: typeof RetreatsIndexRoute
   VenuesIndexRoute: typeof VenuesIndexRoute
 }
 
@@ -190,6 +229,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowWeHelpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/list-your-retreat': {
+      id: '/list-your-retreat'
+      path: '/list-your-retreat'
+      fullPath: '/list-your-retreat'
+      preLoaderRoute: typeof ListYourRetreatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/plan': {
       id: '/plan'
       path: '/plan'
@@ -197,11 +243,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlanRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/retreats': {
-      id: '/retreats'
-      path: '/retreats'
-      fullPath: '/retreats'
-      preLoaderRoute: typeof RetreatsRouteImport
+    '/saved': {
+      id: '/saved'
+      path: '/saved'
+      fullPath: '/saved'
+      preLoaderRoute: typeof SavedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guides/': {
@@ -216,6 +262,20 @@ declare module '@tanstack/react-router' {
       path: '/guides/$slug'
       fullPath: '/guides/$slug'
       preLoaderRoute: typeof GuidesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/retreats/': {
+      id: '/retreats/'
+      path: '/retreats'
+      fullPath: '/retreats/'
+      preLoaderRoute: typeof RetreatsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/retreats/$slug': {
+      id: '/retreats/$slug'
+      path: '/retreats/$slug'
+      fullPath: '/retreats/$slug'
+      preLoaderRoute: typeof RetreatsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/venues/': {
@@ -240,11 +300,14 @@ const rootRouteChildren: RootRouteChildren = {
   DiscoverScotlandRoute: DiscoverScotlandRoute,
   HostRoute: HostRoute,
   HowWeHelpRoute: HowWeHelpRoute,
+  ListYourRetreatRoute: ListYourRetreatRoute,
   PlanRoute: PlanRoute,
-  RetreatsRoute: RetreatsRoute,
+  SavedRoute: SavedRoute,
   GuidesSlugRoute: GuidesSlugRoute,
+  RetreatsSlugRoute: RetreatsSlugRoute,
   VenuesSlugRoute: VenuesSlugRoute,
   GuidesIndexRoute: GuidesIndexRoute,
+  RetreatsIndexRoute: RetreatsIndexRoute,
   VenuesIndexRoute: VenuesIndexRoute,
 }
 export const routeTree = rootRouteImport

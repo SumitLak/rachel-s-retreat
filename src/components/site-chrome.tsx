@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
-import { Mail, Phone } from "lucide-react";
+import { Heart, Mail, Phone } from "lucide-react";
+import { useSavedRetreats } from "@/lib/saved-retreats";
 import { cn } from "@/lib/utils";
 import { contact, countries, venues } from "@/data/site";
 import { EASE, getLenis } from "@/components/motion";
@@ -35,6 +36,27 @@ function Logo({ light }: { light: boolean }) {
         <span className="block font-display text-2xl tracking-tight">Rachel's Retreats</span>
         <span className="eyebrow mt-1 block text-[0.55rem] opacity-70">by Rachel's Farm</span>
       </span>
+    </Link>
+  );
+}
+
+/** Header link to the anonymous shortlist, with a live count. */
+function SavedLink() {
+  const { saved, ready } = useSavedRetreats();
+  const count = ready ? saved.length : 0;
+  return (
+    <Link
+      to="/saved"
+      aria-label={count ? `Saved retreats (${count})` : "Saved retreats"}
+      title="Saved retreats"
+      className="relative grid size-11 place-items-center rounded-full transition-colors hover:bg-current/10"
+    >
+      <Heart className={cn("size-5", count > 0 && "fill-current")} />
+      {count > 0 && (
+        <span className="absolute right-0.5 top-0.5 grid min-w-5 place-items-center rounded-full bg-brass px-1 text-[0.6rem] font-semibold leading-5 text-ink">
+          {count}
+        </span>
+      )}
     </Link>
   );
 }
@@ -98,6 +120,7 @@ export function Header() {
             ))}
           </nav>
           <div className="flex items-center gap-3">
+            <SavedLink />
             <Link
               to="/plan"
               className={cn(

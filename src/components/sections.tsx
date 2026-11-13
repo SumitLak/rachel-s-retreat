@@ -582,13 +582,12 @@ export function RetreatCard({ retreat }: { retreat: Retreat }) {
         <p className="mt-5 leading-relaxed text-ink/80">{retreat.body}</p>
         <div className="mt-auto pt-8">
           <ButtonLink
-            to="/retreats"
-            search={{ retreat: retreat.id }}
-            hash="enquire"
+            to="/retreats/$slug"
+            params={{ slug: retreat.slug }}
             variant="text"
             className="py-0"
           >
-            Enquire
+            Explore retreat
           </ButtonLink>
         </div>
       </div>

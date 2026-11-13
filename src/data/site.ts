@@ -485,45 +485,82 @@ export const team = [
   },
 ];
 
+/** Lifecycle of a listing. Only "published" and "completed" are public. */
+export type RetreatStatus = "draft" | "published" | "completed" | "cancelled";
+
 export type Retreat = {
-  id: string;
+  id: string; // stable id, also used by older ?retreat= links
+  slug: string; // stable URL: /retreats/<slug>, kept after the dates pass
+  status: RetreatStatus;
   type: string;
   typeId: RetreatType;
   dates: string;
+  startDate: string; // ISO yyyy-mm-dd
+  endDate: string;
   year: number;
   title: string;
   venue: string;
   venueSlug: string;
+  destination: Country;
+  organiser: { name: string; role: string };
   body: string;
   image: string;
+  imageAlt: string;
+  /** Verified price text from the organiser, or null if not supplied. */
+  price: string | null;
 };
 
+// Only facts already published by Rachel’s Retreats. Add programme details,
+// prices and photography only once the organiser has approved them.
 export const retreats: Retreat[] = [
   {
     id: "voyage-scotland-kendra-2027",
+    slug: "voyage-scotland-kendra-watson-2027",
+    status: "published",
     type: "Yoga & wellbeing",
     typeId: "yoga",
     dates: "3 July 2027 – 10 July 2027",
+    startDate: "2027-07-03",
+    endDate: "2027-07-10",
     year: 2027,
     title: "Voyage Scotland, with Kendra Watson",
     venue: "Rachel's Farm Buchlyvie, Stirlingshire",
     venueSlug: "buchlyvie",
+    destination: "Scotland",
+    organiser: { name: "Kendra Watson", role: "Organiser of Voyage Scotland" },
     body: "A week of yoga, Scottish landscapes, castle visits and shared adventures with Kendra Watson.",
     image: "/images/stirling-castle.webp",
+    imageAlt: "Moments from Voyage Scotland: yoga, lochs, castles and Highland cattle",
+    price: null,
   },
   {
     id: "seek-yoga-training-2027",
+    slug: "seek-yoga-200-hour-teacher-training-scotland-2027",
+    status: "published",
     type: "Yoga & wellbeing",
     typeId: "yoga",
     dates: "31 October 2027 – 20 November 2027",
+    startDate: "2027-10-31",
+    endDate: "2027-11-20",
     year: 2027,
     title: "200 Hour Yoga Teacher Training in Scotland",
     venue: "Rachel's Farm Buchlyvie, Stirlingshire",
     venueSlug: "buchlyvie",
+    destination: "Scotland",
+    organiser: { name: "SEEK Yoga", role: "Organiser of the 200 Hour Yoga Teacher Training" },
     body: "A three-week residential immersion with SEEK Yoga, combining yoga practice, study and teacher training in the Scottish countryside.",
     image: "/images/studio.webp",
+    imageAlt: "The studio at Rachel’s Farm Buchlyvie",
+    price: null,
   },
 ];
+
+export const publicRetreats = retreats.filter(
+  (r) => r.status === "published" || r.status === "completed",
+);
+export const getRetreat = (slug: string) => publicRetreats.find((r) => r.slug === slug);
+export const retreatNights = (r: Retreat) =>
+  Math.round((Date.parse(r.endDate) - Date.parse(r.startDate)) / 86_400_000);
 
 export const heroSlides = [
   {

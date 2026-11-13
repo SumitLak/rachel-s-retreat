@@ -126,7 +126,7 @@ export function PageHero({
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink/30" />
       <div className="container-luxe relative z-10 pb-20 pt-40 md:pb-28">
         <Reveal>
-          <p className="eyebrow mb-6 flex items-center gap-4 text-brass">
+          <p className="eyebrow mb-6 flex items-center gap-4 text-ivory [text-shadow:0_1px_10px_rgb(0_0_0_/0.55)]">
             <span className="h-px w-10 bg-current" aria-hidden />
             {eyebrow}
           </p>

@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useScroll, useSpring, useInView } from "motion
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Expand, Pause, Play, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { countryOutlines } from "@/data/country-outlines";
 import { EASE, Reveal, SplitLines } from "@/components/motion";
 import { ButtonLink } from "@/components/ui-luxe";
 import { experiences, heroSlides, type GalleryImage, type Retreat, type Venue } from "@/data/site";
@@ -55,7 +56,7 @@ export function HeroSlider() {
 
       <div className="container-luxe relative z-10 flex flex-1 flex-col justify-end pb-32 pt-32 md:pb-36 md:pt-36">
         <p
-          className="animate-fade-up eyebrow mb-8 flex items-center gap-4 text-brass"
+          className="animate-fade-up eyebrow mb-8 flex items-center gap-4 text-ivory [text-shadow:0_1px_10px_rgb(0_0_0_/0.55)]"
           style={{ animationDelay: "200ms" }}
         >
           <span className="h-px w-10 bg-current" aria-hidden />
@@ -162,15 +163,25 @@ export function HeroSlider() {
 /* ------------------------------------------------------------------ */
 export function DestinationStrip({ items }: { items: string[] }) {
   return (
-    <div className="border-b border-border bg-stone py-6 md:py-7">
+    <div className="border-b border-border bg-stone py-4 md:py-5">
       <ul
-        className="container-luxe flex flex-wrap items-center justify-center gap-x-6 gap-y-3 md:gap-x-12"
+        className="container-luxe flex flex-wrap items-center justify-center gap-x-5 gap-y-3 md:gap-x-10"
         aria-label="Destinations"
       >
         {items.map((t, i) => (
-          <li key={t} className="flex items-center gap-6 md:gap-12">
+          <li key={t} className="flex items-center gap-5 md:gap-10">
             {i > 0 && <span className="size-1.5 rotate-45 bg-brass" aria-hidden />}
-            <span className="font-display text-2xl italic text-forest md:text-4xl">{t}</span>
+            <span className="flex items-center gap-2.5">
+              <svg viewBox="0 0 48 48" className="size-8 shrink-0 md:size-10" aria-hidden>
+                <path
+                  d={countryOutlines[t] ?? ""}
+                  className="fill-forest/15 stroke-forest"
+                  strokeWidth={1.2}
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <span className="font-display text-2xl italic text-forest md:text-[2rem]">{t}</span>
+            </span>
           </li>
         ))}
       </ul>

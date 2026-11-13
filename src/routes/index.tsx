@@ -51,10 +51,10 @@ function Home() {
       <HeroSlider />
       <DestinationStrip items={["Scotland", "England", "Ireland", "Italy", "France"]} />
       <section
-        className="border-b border-border py-16 md:py-20"
+        className="border-b border-border py-8 md:py-10"
         aria-label="The collection in numbers"
       >
-        <div className="container-luxe grid grid-cols-2 gap-y-12 md:grid-cols-4">
+        <div className="container-luxe grid grid-cols-2 gap-y-8 md:grid-cols-4">
           {[
             { n: 7, s: "", label: "Venues in the collection" },
             { n: 5, s: "", label: "Countries" },

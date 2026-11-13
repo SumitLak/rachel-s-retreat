@@ -78,6 +78,8 @@ function HostPage() {
         <div className="container-luxe">
           <SectionHeading
             split
+            splitColumns="lg:grid-cols-[7fr_3fr]"
+            headingClassName="lg:text-[clamp(3.25rem,5.3vw,4.5rem)]"
             eyebrow="Fully managed, thoughtfully personal"
             lines={["More time with your people.", <em key="l">Less time on the detail.</em>]}
             intro="A private setting, menus to suit your guests and hosts who help the days run smoothly. Bring your programme and ask us for the support around it."
@@ -86,7 +88,12 @@ function HostPage() {
             {services.map((s, i) => (
               <Reveal key={s.title} delay={i * 0.08}>
                 <div className="group">
-                  <ParallaxImage src={s.image} alt="" className="aspect-[3/4]" strength={6} />
+                  <ParallaxImage
+                    src={s.image}
+                    alt=""
+                    className="aspect-[3/4] rounded-[1.5rem] [mask-image:radial-gradient(white,black)]"
+                    strength={6}
+                  />
                   <p className="mt-5 font-display text-2xl">{s.title}</p>
                 </div>
               </Reveal>

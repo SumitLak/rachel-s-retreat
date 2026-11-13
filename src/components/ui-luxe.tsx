@@ -65,6 +65,8 @@ export function SectionHeading({
   light = false,
   align = "left",
   split = false,
+  headingClassName,
+  splitColumns = "lg:grid-cols-2",
 }: {
   eyebrow: string;
   lines: ReactNode[];
@@ -74,11 +76,21 @@ export function SectionHeading({
   align?: "left" | "center";
   /** Full-width: heading left, intro right (lg+), so no empty right side. */
   split?: boolean;
+  /** Extra classes for the heading itself (e.g. a fluid font size). */
+  headingClassName?: string;
+  /** Grid column template for split layouts, e.g. "lg:grid-cols-[7fr_3fr]". */
+  splitColumns?: string;
 }) {
   if (split) {
     return (
-      <div className={cn("grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16", className)}>
-        <SectionHeading eyebrow={eyebrow} lines={lines} light={light} />
+      <div className={cn("grid gap-6 lg:items-end lg:gap-16", splitColumns, className)}>
+        <SectionHeading
+          eyebrow={eyebrow}
+          lines={lines}
+          light={light}
+          className="max-w-none"
+          {...(headingClassName ? { headingClassName } : {})}
+        />
         {intro && (
           <Reveal delay={0.2}>
             <div
@@ -110,7 +122,11 @@ export function SectionHeading({
       </Reveal>
       <SplitLines
         lines={lines}
-        className={cn("text-5xl md:text-6xl lg:text-7xl", light ? "text-ivory" : "text-ink")}
+        className={cn(
+          "text-5xl md:text-6xl lg:text-7xl",
+          light ? "text-ivory" : "text-ink",
+          headingClassName,
+        )}
       />
       {intro && (
         <Reveal delay={0.2}>

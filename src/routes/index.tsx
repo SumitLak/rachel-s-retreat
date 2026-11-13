@@ -201,17 +201,19 @@ function Home() {
       <PlannerTeaser />
 
       {/* Scotland parallax band */}
-      <section className="grain relative flex min-h-[70vh] items-center overflow-hidden bg-ink text-ivory">
+      <section className="grain relative flex min-h-[75vh] items-center overflow-hidden bg-ink text-ivory md:aspect-[1200/868] md:min-h-0">
         <ParallaxImage
           src="/images/kelpies.webp"
           alt="The Kelpies, Falkirk"
           className="absolute inset-0"
-          strength={16}
+          strength={4}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/25 to-transparent md:via-ink/15" />
         <div className="container-luxe relative z-10 py-20">
           <Reveal>
-            <p className="eyebrow mb-6 text-brass">A place to come back to</p>
+            <p className="eyebrow mb-6 text-ivory [text-shadow:0_1px_10px_rgb(0_0_0_/0.55)]">
+              A place to come back to
+            </p>
           </Reveal>
           <SplitLines
             lines={["See Scotland.", <em key="f">Feel at home.</em>]}
@@ -234,20 +236,22 @@ function Home() {
       {/* Upcoming retreats */}
       <section className="py-16 md:py-24">
         <div className="container-luxe">
-          <div className="flex flex-col justify-between gap-10 md:flex-row md:items-end">
-            <SectionHeading
-              split
-              className="flex-1"
-              eyebrow="Come along"
-              lines={["Your next retreat", <em key="s">starts here.</em>]}
-              intro="Join a programme led by people who love what they do. Enquire with our team for details and help with the next step."
-            />
-            <Reveal>
-              <ButtonLink to="/retreats" variant="outline">
-                Find a retreat
-              </ButtonLink>
-            </Reveal>
-          </div>
+          <SectionHeading
+            split
+            eyebrow="Come along"
+            lines={["Your next retreat", <em key="s">starts here.</em>]}
+            intro={
+              <>
+                <p>
+                  Join a programme led by people who love what they do. Enquire with our team for
+                  details and help with the next step.
+                </p>
+                <ButtonLink to="/retreats" variant="outline" className="mt-6">
+                  Find a retreat
+                </ButtonLink>
+              </>
+            }
+          />
           <div className="mt-10 grid gap-8">
             {retreats.map((r, i) => (
               <Reveal key={r.id} delay={i * 0.1}>

@@ -265,40 +265,86 @@ const venueNamePatterns = venues
   ]);
 
 /**
- * Renders copy with the first mention of each venue linked to its page.
- * Pass `seen` to share "already linked" state across paragraphs in a section.
+ * Pure helper: for a list of paragraphs, find the first mention of each venue
+ * (skipping `exclude`) and return each paragraph as text/link segments.
+ * Computed in one pass with no shared mutable state, so server and client
+ * render identically.
  */
-export function LinkedText({ text, seen }: { text: string; seen?: Set<string> }) {
-  const used = seen ?? new Set<string>();
-  const parts: ReactNode[] = [];
-  let rest = text;
-  let key = 0;
-  for (;;) {
-    let best: { idx: number; slug: string; name: string } | null = null;
-    for (const p of venueNamePatterns) {
-      if (used.has(p.slug)) continue;
-      const idx = rest.indexOf(p.name);
-      if (
-        idx >= 0 &&
-        (best === null || idx < best.idx || (idx === best.idx && p.name.length > best.name.length))
-      )
-        best = { idx, ...p };
+export function linkVenueMentions(
+  paragraphs: string[],
+  exclude: string[] = [],
+): ({ text: string } | { slug: string; name: string })[][] {
+  const used = new Set(exclude);
+  return paragraphs.map((text) => {
+    const segs: ({ text: string } | { slug: string; name: string })[] = [];
+    let rest = text;
+    for (;;) {
+      let best: { idx: number; slug: string; name: string } | null = null;
+      for (const p of venueNamePatterns) {
+        if (used.has(p.slug)) continue;
+        const idx = rest.indexOf(p.name);
+        if (
+          idx >= 0 &&
+          (best === null ||
+            idx < best.idx ||
+            (idx === best.idx && p.name.length > best.name.length))
+        )
+          best = { idx, ...p };
+      }
+      if (!best) break;
+      segs.push({ text: rest.slice(0, best.idx) }, { slug: best.slug, name: best.name });
+      used.add(best.slug);
+      rest = rest.slice(best.idx + best.name.length);
     }
-    if (!best) break;
-    parts.push(rest.slice(0, best.idx));
-    parts.push(
-      <Link
-        key={key++}
-        to="/venues/$slug"
-        params={{ slug: best.slug }}
-        className="font-semibold text-forest underline decoration-brass/50 underline-offset-4 transition-colors hover:decoration-forest"
-      >
-        {best.name}
-      </Link>,
-    );
-    used.add(best.slug);
-    rest = rest.slice(best.idx + best.name.length);
-  }
-  parts.push(rest);
-  return <>{parts}</>;
+    segs.push({ text: rest });
+    return segs;
+  });
+}
+
+function Segments({ segs }: { segs: ({ text: string } | { slug: string; name: string })[] }) {
+  return (
+    <>
+      {segs.map((seg, i) =>
+        "slug" in seg ? (
+          <Link
+            key={i}
+            to="/venues/$slug"
+            params={{ slug: seg.slug }}
+            className="font-semibold text-forest underline decoration-brass/50 underline-offset-4 transition-colors hover:decoration-forest"
+          >
+            {seg.name}
+          </Link>
+        ) : (
+          seg.text
+        ),
+      )}
+    </>
+  );
+}
+
+/** One paragraph with the first mention of each venue linked. */
+export function LinkedText({ text }: { text: string }) {
+  return <Segments segs={linkVenueMentions([text])[0] ?? []} />;
+}
+
+/** Several paragraphs; each venue is linked once across the whole group. */
+export function LinkedParagraphs({
+  paragraphs,
+  exclude,
+  className,
+}: {
+  paragraphs: string[];
+  exclude?: string[];
+  className?: string;
+}) {
+  const linked = linkVenueMentions(paragraphs, exclude);
+  return (
+    <>
+      {linked.map((segs, i) => (
+        <p key={i} className={className}>
+          <Segments segs={segs} />
+        </p>
+      ))}
+    </>
+  );
 }

@@ -1,13 +1,14 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, HeartHandshake, KeyRound, MapPinned } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { EASE, ParallaxImage, Reveal } from "@/components/motion";
+import { AccentLine, EASE, getLenis, Reveal, RevealImage } from "@/components/motion";
 import {
   ButtonLink,
   ClosingCTA,
   FaqItem,
+  LinkedParagraphs,
   LinkedText,
   PageHero,
   SectionHeading,
@@ -95,7 +96,20 @@ function VenuesPage() {
         intro={c.intro[0]}
         image="/images/manor-house.webp"
         alt="The Manor House, County Monaghan"
-      />
+      >
+        <ul className="mt-8 flex flex-wrap gap-2" aria-label="Jump to a destination">
+          {c.destinations.map((d) => (
+            <li key={d.country}>
+              <a
+                href={`#${destinationId(d.country)}`}
+                className="block rounded-full px-4 py-2 text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-ivory ring-1 ring-ivory/40 transition-colors hover:bg-ivory hover:text-ink"
+              >
+                {d.country}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </PageHero>
 
       <section className="pt-10 md:pt-14">
         <div className="container-luxe grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-end lg:gap-16">
@@ -193,131 +207,191 @@ function VenuesPage() {
         </div>
       </section>
 
-      {/* 03 · Find the perfect venue */}
+      {/* 03 · Introduction: 45/55 editorial split */}
       <section className="border-t border-border py-14 md:py-20">
-        <div className="container-luxe grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
-          <SectionHeading eyebrow="Choosing your setting" lines={[c.findVenue.heading]} />
-          <Reveal delay={0.1} className="space-y-5 text-lg">
-            {c.findVenue.body.map((p) => (
-              <p key={p} className={prose}>
-                {p}
-              </p>
-            ))}
-          </Reveal>
+        <div className="container-luxe grid items-center gap-10 lg:grid-cols-[45fr_55fr] lg:gap-16">
+          <div>
+            <SectionHeading eyebrow="Choosing your setting" lines={[c.findVenue.heading]} />
+            <Reveal delay={0.1} className="mt-8 space-y-4 text-[1.05rem]">
+              {c.findVenue.body.map((p) => (
+                <p key={p} className={prose}>
+                  {p}
+                </p>
+              ))}
+            </Reveal>
+          </div>
+          <RevealImage
+            src="/images/studio.webp"
+            alt="The studio at Rachel’s Farm Buchlyvie, set up for a group session"
+            className="aspect-[4/5] lg:aspect-[5/6]"
+          />
         </div>
       </section>
 
-      {/* 04 · Destinations */}
+      {/* 04 · Destination stories, with sticky destination navigation */}
       <section className="bg-stone py-14 md:py-20" aria-labelledby="destinations-heading">
         <div className="container-luxe">
           <SectionHeading
-            eyebrow="Scotland · England · Ireland · Italy · France"
+            split
+            eyebrow="Explore the collection by destination"
             lines={[
               <span key="h" id="destinations-heading">
                 {c.destinationsHeading}
               </span>,
             ]}
+            intro="Five destinations, seven settings. Choose a country to jump to its story."
           />
-          <div className="mt-12 space-y-16 md:space-y-24">
-            {c.destinations.map((d, i) => (
-              <Destination key={d.country} d={d} flip={i % 2 === 1} />
-            ))}
-          </div>
+        </div>
+        <DestinationNav />
+        <div className="container-luxe mt-10 space-y-16 md:space-y-24">
+          {c.destinations.map((d, i) => (
+            <Destination key={d.country} d={d} index={i} flip={i % 2 === 1} />
+          ))}
         </div>
       </section>
 
-      {/* 05 · Retreat types */}
+      {/* 05 · Retreat experiences: image-led cards (swipeable on mobile) */}
       <section className="py-14 md:py-20">
         <div className="container-luxe">
           <SectionHeading
             split
-            eyebrow="Retreat types"
+            eyebrow="Every retreat has its own story"
             lines={[c.types.heading]}
             intro={c.types.intro[0]}
           />
-          <div className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
-            {c.types.items.map((t, i) => (
-              <Reveal key={t.heading} delay={i * 0.08}>
-                <article>
-                  <ParallaxImage
-                    src={t.image}
-                    alt=""
-                    className="aspect-[4/3] rounded-[1.5rem] [mask-image:radial-gradient(white,black)]"
-                    strength={6}
-                  />
-                  <h3 className="mt-6 text-3xl leading-tight">{t.heading}</h3>
-                  <div className="mt-4 space-y-3">
-                    {t.body.map((p) => (
-                      <p key={p} className={prose}>
-                        {p}
-                      </p>
-                    ))}
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm">
-            <InlineLink to="/host">How hosting works</InlineLink>
-            <InlineLink to="/retreats">Find a retreat to join</InlineLink>
-            <InlineLink to="/discover-scotland">Discover Scotland</InlineLink>
-          </Reveal>
+        </div>
+        <div className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 [scrollbar-width:none] md:mx-auto md:grid md:max-w-[104rem] md:snap-none md:grid-cols-3 md:gap-8 md:overflow-visible md:px-10 md:pb-0 xl:px-12">
+          {c.types.items.map((t, i) => (
+            <motion.article
+              key={t.heading}
+              className="group w-[85vw] shrink-0 snap-start sm:w-[60vw] md:w-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+              transition={{ duration: 0.7, ease: EASE, delay: i * 0.1 }}
+            >
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] [mask-image:radial-gradient(white,black)]">
+                <img
+                  src={t.image}
+                  alt=""
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-luxe)] group-hover:scale-[1.05]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
+                <h3 className="absolute inset-x-0 bottom-0 p-6 font-display text-3xl leading-tight text-ivory">
+                  {t.heading}
+                </h3>
+              </div>
+              <div className="mt-5 space-y-3 px-1 text-[0.95rem]">
+                {t.body.map((p) => (
+                  <p key={p} className={prose}>
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </motion.article>
+          ))}
+        </div>
+        <div className="container-luxe mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm">
+          <InlineLink to="/host">How hosting works</InlineLink>
+          <InlineLink to="/retreats">Find a retreat to join</InlineLink>
+          <InlineLink to="/discover-scotland">Discover Scotland</InlineLink>
         </div>
       </section>
 
-      {/* 06 · Why choose us */}
+      {/* 06 · Why Rachel's Retreats: three benefit panels */}
       <section className="grain relative overflow-hidden bg-forest py-14 text-ivory md:py-20">
         <div className="container-luxe">
-          <SectionHeading light eyebrow="Our difference" lines={[c.why.heading]} />
-          <div className="mt-12 grid gap-px overflow-hidden rounded-[1.5rem] bg-ivory/15 md:grid-cols-3">
-            {c.why.items.map((w, i) => (
-              <Reveal key={w.heading} delay={i * 0.08} className="bg-forest">
-                <article className="h-full p-8 md:p-10">
-                  <p className="font-display text-4xl italic text-brass">0{i + 1}</p>
+          <SectionHeading
+            light
+            split
+            eyebrow="More than a beautiful location"
+            lines={[c.why.heading]}
+            intro="Private venues, hosting support and the flexibility to fit your group."
+          />
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {c.why.items.map((w, i) => {
+              const Icon = benefitIcons[i] ?? KeyRound;
+              return (
+                <motion.article
+                  key={w.heading}
+                  className="h-full rounded-[1.5rem] bg-ivory/[0.06] p-8 ring-1 ring-ivory/15 transition-colors duration-300 hover:bg-ivory/[0.1] md:p-10"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+                  transition={{ duration: 0.7, ease: EASE, delay: i * 0.1 }}
+                >
+                  <span className="grid size-12 place-items-center rounded-full bg-brass/20 text-brass">
+                    <Icon className="size-5" />
+                  </span>
                   <h3 className="mt-6 text-3xl leading-tight">{w.heading}</h3>
-                  <div className="mt-4 space-y-3 text-ivory/75">
+                  <div className="mt-4 space-y-3 text-[0.95rem] text-ivory/75">
                     {w.body.map((p) => (
                       <p key={p} className="leading-relaxed">
                         {p}
                       </p>
                     ))}
                   </div>
-                </article>
-              </Reveal>
-            ))}
+                </motion.article>
+              );
+            })}
           </div>
-          <Reveal className="mt-8">
+          <div className="mt-8">
             <Link
               to="/how-we-help"
               className="link-draw inline-flex items-center gap-2 pb-1 text-sm text-brass"
             >
               See how our team supports your retreat <ArrowRight className="size-4" />
             </Link>
-          </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* How to choose */}
+      {/* How to choose: three-step visual guide */}
       <section className="py-14 md:py-20">
-        <div className="container-luxe grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
-          <div>
-            <SectionHeading eyebrow="Before you decide" lines={[c.choose.heading]} />
-            <Reveal delay={0.2} className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
+        <div className="container-luxe">
+          <SectionHeading
+            split
+            eyebrow="Before you decide"
+            lines={[c.choose.heading]}
+            intro={c.choose.body[0]}
+          />
+          <ol className="relative mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
+            <motion.span
+              aria-hidden
+              className="absolute left-0 right-0 top-6 hidden h-px origin-left bg-brass/60 md:block"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true, margin: "0px 0px -20% 0px" }}
+              transition={{ duration: 1.4, ease: EASE }}
+            />
+            {chooseSteps.map((s, i) => (
+              <li key={s.title} className="relative">
+                <span className="relative z-10 grid size-12 place-items-center rounded-full bg-ivory font-display text-xl text-forest ring-1 ring-brass">
+                  {i + 1}
+                </span>
+                <h3 className="mt-5 text-3xl leading-tight">{s.title}</h3>
+                <div className="mt-3 space-y-3">
+                  {s.paras.map((p) => (
+                    <p key={p} className={prose}>
+                      {p}
+                    </p>
+                  ))}
+                </div>
+              </li>
+            ))}
+          </ol>
+          <div className="mt-10 flex flex-col gap-5 rounded-[1.5rem] bg-stone p-6 md:flex-row md:items-center md:justify-between md:p-8">
+            <p className="font-display text-2xl leading-snug">{c.choose.body[5]}</p>
+            <div className="flex flex-wrap gap-x-8 gap-y-3 text-sm">
               <InlineLink to="/guides/$slug" params={{ slug: "choosing-a-venue" }}>
                 Guide: choose a venue
               </InlineLink>
               <InlineLink to="/guides/$slug" params={{ slug: "minimum-stays-and-group-sizes" }}>
                 Minimum stays by venue
               </InlineLink>
-            </Reveal>
+            </div>
           </div>
-          <Reveal delay={0.1} className="space-y-5 text-lg">
-            {c.choose.body.map((p) => (
-              <p key={p} className={prose}>
-                {p}
-              </p>
-            ))}
-          </Reveal>
         </div>
       </section>
 
@@ -362,30 +436,109 @@ function VenuesPage() {
 
 type Dest = (typeof c.destinations)[number];
 
-function Destination({ d, flip }: { d: Dest; flip: boolean }) {
-  const seen = new Set<string>();
+const destinationId = (country: string) => `destination-${country.toLowerCase()}`;
+
+const benefitIcons = [KeyRound, HeartHandshake, MapPinned];
+
+// Steps group the approved "How to choose" paragraphs; titles are layout labels.
+const chooseSteps = [
+  { title: "Your group and rooming", paras: [c.choose.body[1] ?? ""] },
+  {
+    title: "Your programme and destination",
+    paras: [c.choose.body[2] ?? "", c.choose.body[3] ?? ""],
+  },
+  { title: "Dates, budget and length of stay", paras: [c.choose.body[4] ?? ""] },
+];
+
+/** Sticky on desktop; scrolls smoothly to each destination story. */
+function DestinationNav() {
+  const [active, setActive] = useState<string>(c.destinations[0]?.country ?? "");
+  useEffect(() => {
+    const els = c.destinations
+      .map((d) => document.getElementById(destinationId(d.country)))
+      .filter((e): e is HTMLElement => e !== null);
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries)
+          if (e.isIntersecting) setActive(e.target.getAttribute("data-country") ?? "");
+      },
+      { rootMargin: "-40% 0px -55% 0px" },
+    );
+    els.forEach((e) => io.observe(e));
+    return () => io.disconnect();
+  }, []);
+
+  const go = (country: string) => {
+    const el = document.getElementById(destinationId(country));
+    if (!el) return;
+    setActive(country);
+    const lenis = getLenis();
+    if (lenis) lenis.scrollTo(el, { offset: -170 });
+    else el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
-    <article className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
-      <Reveal className={cn("lg:sticky lg:top-28", flip && "lg:order-2")}>
-        <ParallaxImage
-          src={d.image}
-          alt={d.imageAlt}
-          className="aspect-[4/3] rounded-[1.5rem] [mask-image:radial-gradient(white,black)]"
-          strength={6}
-        />
-      </Reveal>
-      <Reveal delay={0.1}>
-        <p className="eyebrow text-[0.6rem] text-forest">{d.country}</p>
-        <h3 className="mt-3 text-[clamp(2rem,3.2vw,2.75rem)] leading-tight">{d.heading}</h3>
+    <nav
+      aria-label="Destinations"
+      className="sticky top-20 z-30 mt-8 border-y border-ink/10 bg-stone/90 backdrop-blur-md md:top-24"
+    >
+      <ul className="container-luxe flex gap-1 overflow-x-auto py-3 [scrollbar-width:none]">
+        {c.destinations.map((d) => (
+          <li key={d.country}>
+            <a
+              href={`#${destinationId(d.country)}`}
+              onClick={(e) => {
+                e.preventDefault();
+                go(d.country);
+              }}
+              aria-current={active === d.country ? "location" : undefined}
+              className={cn(
+                "relative block whitespace-nowrap rounded-full px-4 py-2.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] transition-colors",
+                active === d.country ? "text-ivory" : "text-ink/65 hover:text-ink",
+              )}
+            >
+              {active === d.country && (
+                <motion.span
+                  layoutId="dest-nav"
+                  className="absolute inset-0 rounded-full bg-forest"
+                  transition={{ duration: 0.4, ease: EASE }}
+                />
+              )}
+              <span className="relative">{d.country}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+function Destination({ d, index, flip }: { d: Dest; index: number; flip: boolean }) {
+  return (
+    <article
+      id={destinationId(d.country)}
+      data-country={d.country}
+      className="grid scroll-mt-44 items-start gap-8 lg:grid-cols-[45fr_55fr] lg:gap-16"
+    >
+      <div className={cn("lg:sticky lg:top-44", flip ? "lg:order-1" : "lg:order-2")}>
+        <RevealImage src={d.image} alt={d.imageAlt} className="aspect-[4/3] lg:aspect-[5/4]" />
+      </div>
+      <div className={flip ? "lg:order-2" : "lg:order-1"}>
+        <p className="eyebrow text-[0.6rem] text-forest">
+          {String(index + 1).padStart(2, "0")} / {d.country}
+        </p>
+        <AccentLine className="mt-4" />
+        <Reveal y={20}>
+          <h3 className="mt-4 text-[clamp(2rem,3.2vw,2.75rem)] leading-tight">{d.heading}</h3>
+        </Reveal>
         <div className="mt-5 space-y-4">
-          {d.intro.map((p) => (
-            <p key={p} className={prose}>
-              <LinkedText text={p} seen={seen} />
-            </p>
-          ))}
+          <LinkedParagraphs
+            paragraphs={d.intro}
+            exclude={d.venues.map((v) => v.slug)}
+            className={prose}
+          />
         </div>
         {d.venues.map((v) => {
-          seen.add(v.slug);
           return (
             <div key={v.slug} className="mt-8 border-t border-ink/10 pt-6">
               <h4 className="font-display text-2xl">
@@ -395,7 +548,7 @@ function Destination({ d, flip }: { d: Dest; flip: boolean }) {
                   className="group inline-flex items-center gap-2 text-forest hover:text-ink"
                 >
                   {v.name}
-                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </Link>
               </h4>
               <div className="mt-3 space-y-3">
@@ -419,7 +572,7 @@ function Destination({ d, flip }: { d: Dest; flip: boolean }) {
             Register interest in The Château
           </ButtonLink>
         )}
-      </Reveal>
+      </div>
     </article>
   );
 }

@@ -237,3 +237,57 @@ export function SmoothScroll() {
 
   return null;
 }
+
+/**
+ * Editorial photograph that reveals through a soft mask (clip-path) while easing
+ * from 1.04 to 1 scale. One restrained effect; static for reduced-motion users.
+ */
+export function RevealImage({
+  src,
+  alt,
+  className,
+  sizes,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  sizes?: string;
+}) {
+  const reduce = useReducedMotion();
+  return (
+    <motion.div
+      className={cn("relative overflow-hidden rounded-[1.5rem] bg-stone", className)}
+      initial={reduce ? false : { clipPath: "inset(10% 6% 10% 6% round 1.5rem)" }}
+      whileInView={{ clipPath: "inset(0% 0% 0% 0% round 1.5rem)" }}
+      viewport={{ once: true, margin: "0px 0px -15% 0px" }}
+      transition={{ duration: 1.1, ease: EASE }}
+    >
+      <motion.img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        sizes={sizes}
+        className="absolute inset-0 h-full w-full object-cover"
+        initial={reduce ? false : { scale: 1.04 }}
+        whileInView={{ scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.6, ease: EASE }}
+      />
+    </motion.div>
+  );
+}
+
+/** Thin brass rule that extends as it enters the viewport. */
+export function AccentLine({ className }: { className?: string }) {
+  return (
+    <motion.span
+      aria-hidden
+      className={cn("block h-px w-16 origin-left bg-brass", className)}
+      initial={{ scaleX: 0 }}
+      whileInView={{ scaleX: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.9, ease: EASE, delay: 0.2 }}
+    />
+  );
+}

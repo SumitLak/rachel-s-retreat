@@ -10,33 +10,128 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DiscoverScotlandRouteImport } from './routes/discover-scotland'
+import { Route as HostRouteImport } from './routes/host'
+import { Route as HowWeHelpRouteImport } from './routes/how-we-help'
+import { Route as PlanRouteImport } from './routes/plan'
+import { Route as RetreatsRouteImport } from './routes/retreats'
+import { Route as VenuesIndexRouteImport } from './routes/venues.index'
+import { Route as VenuesSlugRouteImport } from './routes/venues.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DiscoverScotlandRoute = DiscoverScotlandRouteImport.update({
+  id: '/discover-scotland',
+  path: '/discover-scotland',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HostRoute = HostRouteImport.update({
+  id: '/host',
+  path: '/host',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowWeHelpRoute = HowWeHelpRouteImport.update({
+  id: '/how-we-help',
+  path: '/how-we-help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanRoute = PlanRouteImport.update({
+  id: '/plan',
+  path: '/plan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RetreatsRoute = RetreatsRouteImport.update({
+  id: '/retreats',
+  path: '/retreats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VenuesIndexRoute = VenuesIndexRouteImport.update({
+  id: '/venues/',
+  path: '/venues/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VenuesSlugRoute = VenuesSlugRouteImport.update({
+  id: '/venues/$slug',
+  path: '/venues/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/discover-scotland': typeof DiscoverScotlandRoute
+  '/host': typeof HostRoute
+  '/how-we-help': typeof HowWeHelpRoute
+  '/plan': typeof PlanRoute
+  '/retreats': typeof RetreatsRoute
+  '/venues/$slug': typeof VenuesSlugRoute
+  '/venues/': typeof VenuesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/discover-scotland': typeof DiscoverScotlandRoute
+  '/host': typeof HostRoute
+  '/how-we-help': typeof HowWeHelpRoute
+  '/plan': typeof PlanRoute
+  '/retreats': typeof RetreatsRoute
+  '/venues/$slug': typeof VenuesSlugRoute
+  '/venues': typeof VenuesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/discover-scotland': typeof DiscoverScotlandRoute
+  '/host': typeof HostRoute
+  '/how-we-help': typeof HowWeHelpRoute
+  '/plan': typeof PlanRoute
+  '/retreats': typeof RetreatsRoute
+  '/venues/$slug': typeof VenuesSlugRoute
+  '/venues/': typeof VenuesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/discover-scotland'
+    | '/host'
+    | '/how-we-help'
+    | '/plan'
+    | '/retreats'
+    | '/venues/$slug'
+    | '/venues/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/discover-scotland'
+    | '/host'
+    | '/how-we-help'
+    | '/plan'
+    | '/retreats'
+    | '/venues/$slug'
+    | '/venues'
+  id:
+    | '__root__'
+    | '/'
+    | '/discover-scotland'
+    | '/host'
+    | '/how-we-help'
+    | '/plan'
+    | '/retreats'
+    | '/venues/$slug'
+    | '/venues/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DiscoverScotlandRoute: typeof DiscoverScotlandRoute
+  HostRoute: typeof HostRoute
+  HowWeHelpRoute: typeof HowWeHelpRoute
+  PlanRoute: typeof PlanRoute
+  RetreatsRoute: typeof RetreatsRoute
+  VenuesSlugRoute: typeof VenuesSlugRoute
+  VenuesIndexRoute: typeof VenuesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +143,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/discover-scotland': {
+      id: '/discover-scotland'
+      path: '/discover-scotland'
+      fullPath: '/discover-scotland'
+      preLoaderRoute: typeof DiscoverScotlandRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/host': {
+      id: '/host'
+      path: '/host'
+      fullPath: '/host'
+      preLoaderRoute: typeof HostRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-we-help': {
+      id: '/how-we-help'
+      path: '/how-we-help'
+      fullPath: '/how-we-help'
+      preLoaderRoute: typeof HowWeHelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plan': {
+      id: '/plan'
+      path: '/plan'
+      fullPath: '/plan'
+      preLoaderRoute: typeof PlanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/retreats': {
+      id: '/retreats'
+      path: '/retreats'
+      fullPath: '/retreats'
+      preLoaderRoute: typeof RetreatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/venues/': {
+      id: '/venues/'
+      path: '/venues'
+      fullPath: '/venues/'
+      preLoaderRoute: typeof VenuesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/venues/$slug': {
+      id: '/venues/$slug'
+      path: '/venues/$slug'
+      fullPath: '/venues/$slug'
+      preLoaderRoute: typeof VenuesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DiscoverScotlandRoute: DiscoverScotlandRoute,
+  HostRoute: HostRoute,
+  HowWeHelpRoute: HowWeHelpRoute,
+  PlanRoute: PlanRoute,
+  RetreatsRoute: RetreatsRoute,
+  VenuesSlugRoute: VenuesSlugRoute,
+  VenuesIndexRoute: VenuesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

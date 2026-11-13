@@ -4,7 +4,7 @@
 
 export const venuesSeo = {
   title: "Luxury Retreat Venues Across the UK & Europe | Rachel’s Retreats",
-  // Draft pending approval: approved metadata wasn't supplied with the copy.
+  // Approved 13 Nov 2026.
   description:
     "Exclusive-use luxury retreat venues in Scotland, the Lake District, Ireland and Tuscany, with a French château coming soon. Find the right setting for your group.",
 

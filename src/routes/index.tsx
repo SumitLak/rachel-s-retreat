@@ -72,8 +72,8 @@ function Home() {
       </section>
 
       {/* Introduction */}
-      <section className="py-28 md:py-40">
-        <div className="container-luxe grid gap-16 lg:grid-cols-[1.05fr_1fr] lg:gap-24">
+      <section className="py-16 md:py-24">
+        <div className="container-luxe grid items-center gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
             <SectionHeading
               eyebrow="This is Rachel's Retreats"
@@ -108,13 +108,13 @@ function Home() {
             <ParallaxImage
               src="/images/studio.webp"
               alt="The studio at Rachel's Farm Buchlyvie"
-              className="col-span-3 aspect-[3/4] self-start"
+              className="col-span-3 aspect-[3/4] min-h-[22rem] lg:min-h-[34rem]"
               strength={8}
             />
             <ParallaxImage
               src="/images/food-gnocchi.webp"
               alt="A dish prepared by the Rachel's Retreats chefs"
-              className="col-span-2 mt-24 aspect-[3/4]"
+              className="col-span-2 mt-16 aspect-[3/4] lg:mt-28"
               strength={14}
             />
           </div>
@@ -122,7 +122,7 @@ function Home() {
       </section>
 
       {/* Collection carousel */}
-      <section className="py-28 md:py-40">
+      <section className="py-16 md:py-24">
         <VenueCarousel
           venues={venues}
           header={
@@ -136,7 +136,7 @@ function Home() {
       </section>
 
       {/* Pillars on dark */}
-      <section className="grain relative overflow-hidden bg-forest py-28 text-ivory md:py-36">
+      <section className="grain relative overflow-hidden bg-forest py-16 text-ivory md:py-24">
         <div className="container-luxe">
           <SectionHeading
             light
@@ -149,7 +149,7 @@ function Home() {
             ]}
             intro="Menus planned around your guests. Rooms ready for their arrival. The right people, places and experiences brought together with care."
           />
-          <div className="mt-20 grid gap-px bg-ivory/15 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-px bg-ivory/15 sm:grid-cols-2 lg:grid-cols-4">
             {pillars.map((p, i) => (
               <Reveal key={p.title} delay={i * 0.1} className="bg-forest">
                 <div className="group h-full p-8 transition-colors duration-500 hover:bg-ink/40 md:p-10">
@@ -164,7 +164,7 @@ function Home() {
       </section>
 
       {/* Scroll story */}
-      <section className="pt-28 md:pt-40">
+      <section className="pt-16 md:pt-24">
         <div className="container-luxe">
           <SectionHeading
             eyebrow="How hosting works"
@@ -175,7 +175,7 @@ function Home() {
         <div className="mt-10">
           <ScrollStory steps={hostSteps} />
         </div>
-        <div className="container-luxe pb-28 md:pb-40">
+        <div className="container-luxe pb-16 md:pb-24">
           <Reveal>
             <ButtonLink to="/host">See the full hosting journey</ButtonLink>
           </Reveal>
@@ -183,8 +183,8 @@ function Home() {
       </section>
 
       {/* Experience selector */}
-      <section className="bg-stone py-28 md:py-40">
-        <div className="container-luxe mb-16">
+      <section className="bg-stone py-16 md:py-24">
+        <div className="container-luxe mb-10">
           <SectionHeading
             eyebrow="Space for your ideas"
             lines={["What will", <em key="b">you bring?</em>]}
@@ -197,7 +197,7 @@ function Home() {
       <PlannerTeaser />
 
       {/* Scotland parallax band */}
-      <section className="grain relative flex min-h-[90vh] items-center overflow-hidden bg-ink text-ivory">
+      <section className="grain relative flex min-h-[70vh] items-center overflow-hidden bg-ink text-ivory">
         <ParallaxImage
           src="/images/kelpies.webp"
           alt="The Kelpies, Falkirk"
@@ -205,7 +205,7 @@ function Home() {
           strength={16}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/40 to-transparent" />
-        <div className="container-luxe relative z-10 py-28">
+        <div className="container-luxe relative z-10 py-20">
           <Reveal>
             <p className="eyebrow mb-6 text-brass">A place to come back to</p>
           </Reveal>
@@ -228,7 +228,7 @@ function Home() {
       </section>
 
       {/* Upcoming retreats */}
-      <section className="py-28 md:py-40">
+      <section className="py-16 md:py-24">
         <div className="container-luxe">
           <div className="flex flex-col justify-between gap-10 md:flex-row md:items-end">
             <SectionHeading
@@ -242,7 +242,7 @@ function Home() {
               </ButtonLink>
             </Reveal>
           </div>
-          <div className="mt-16 grid gap-8">
+          <div className="mt-10 grid gap-8">
             {retreats.map((r, i) => (
               <Reveal key={r.id} delay={i * 0.1}>
                 <RetreatCard retreat={r} />

@@ -89,7 +89,7 @@ function VenuePage() {
       </section>
 
       {/* Intro + at a glance */}
-      <section className="py-24 md:py-36">
+      <section className="py-16 md:py-24">
         <div className="container-luxe grid gap-16 lg:grid-cols-[1.3fr_1fr] lg:gap-24">
           <div>
             <SectionHeading
@@ -97,7 +97,7 @@ function VenuePage() {
               lines={[venue.headline]}
               intro={venue.intro}
             />
-            <ul className="mt-14 grid gap-px bg-border sm:grid-cols-2">
+            <ul className="mt-10 grid gap-px bg-border sm:grid-cols-2">
               {venue.highlights.map((h, i) => (
                 <Reveal key={h} delay={i * 0.06} className="bg-ivory">
                   <li className="flex h-full gap-4 py-6 pr-6">
@@ -152,7 +152,7 @@ function VenuePage() {
       </section>
 
       {/* Gallery */}
-      <section id="gallery" className="scroll-mt-24 pb-24 md:pb-36">
+      <section id="gallery" className="scroll-mt-24 pb-16 md:pb-24">
         <div className="container-luxe">
           <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <SectionHeading
@@ -171,7 +171,7 @@ function VenuePage() {
       </section>
 
       {/* Hospitality band */}
-      <section className="bg-stone py-24 md:py-32">
+      <section className="bg-stone py-14 md:py-20">
         <div className="container-luxe grid items-center gap-14 lg:grid-cols-2">
           <ParallaxImage
             src="/images/food-fish.webp"
@@ -195,7 +195,7 @@ function VenuePage() {
       </section>
 
       {/* Other venues */}
-      <section className="py-24 md:py-36">
+      <section className="py-16 md:py-24">
         <VenueCarousel
           venues={others}
           header={

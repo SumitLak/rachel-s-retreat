@@ -166,7 +166,7 @@ export function ClosingCTA({
   image?: string;
 }) {
   return (
-    <section className="grain relative overflow-hidden bg-ink py-36 text-ivory md:py-48">
+    <section className="grain relative overflow-hidden bg-ink py-24 text-ivory md:py-32">
       <ParallaxImage src={image} alt="" className="absolute inset-0 opacity-55" strength={14} />
       <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/60 to-ink/20" />
       <div className="container-luxe relative z-10">

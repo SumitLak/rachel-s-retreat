@@ -326,11 +326,11 @@ export function VenueCarousel({ venues, header }: { venues: Venue[]; header?: Re
           />
         </div>
       </div>
-      <Reveal className="mt-14">
+      <Reveal className="mt-10">
         <div className="cursor-grab overflow-hidden active:cursor-grabbing" ref={ref}>
           <div className="flex gap-6 pl-5 md:pl-10 xl:pl-[max(4rem,calc((100vw-88rem)/2+4rem))]">
             {venues.map((v) => (
-              <div key={v.slug} className="w-[78vw] shrink-0 sm:w-[46vw] lg:w-[30vw] xl:w-[26rem]">
+              <div key={v.slug} className="w-[82vw] shrink-0 sm:w-[52vw] lg:w-[36vw] xl:w-[32rem]">
                 <VenueCard venue={v} />
               </div>
             ))}
@@ -373,7 +373,7 @@ function StoryStep({
     if (inView) onActive(index);
   }, [inView, index, onActive]);
   return (
-    <div ref={ref} className="flex min-h-[70vh] items-center py-10 lg:min-h-[90vh]">
+    <div ref={ref} className="flex min-h-[55vh] items-center py-8 lg:min-h-[75vh]">
       <div
         className={cn("transition-opacity duration-700", active ? "opacity-100" : "lg:opacity-30")}
       >

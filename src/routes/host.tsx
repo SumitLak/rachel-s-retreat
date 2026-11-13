@@ -73,14 +73,14 @@ function HostPage() {
         </div>
       </PageHero>
 
-      <section className="py-28 md:py-36">
+      <section className="py-16 md:py-24">
         <div className="container-luxe">
           <SectionHeading
             eyebrow="Fully managed, thoughtfully personal"
             lines={["More time with your people.", <em key="l">Less time on the detail.</em>]}
             intro="A private setting, menus to suit your guests and hosts who help the days run smoothly. Bring your programme and ask us for the support around it."
           />
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {services.map((s, i) => (
               <Reveal key={s.title} delay={i * 0.08}>
                 <div className="group">
@@ -106,8 +106,8 @@ function HostPage() {
         </div>
       </section>
 
-      <section className="bg-stone py-28 md:py-36">
-        <div className="container-luxe mb-16">
+      <section className="bg-stone py-16 md:py-24">
+        <div className="container-luxe mb-10">
           <SectionHeading
             eyebrow="Space for your ideas"
             lines={["Every kind of", <em key="g">gathering.</em>]}
@@ -116,7 +116,7 @@ function HostPage() {
         <ExperienceSelector />
       </section>
 
-      <section className="py-28 md:py-36">
+      <section className="py-16 md:py-24">
         <div className="container-luxe grid gap-16 lg:grid-cols-[1fr_1.4fr]">
           <SectionHeading
             eyebrow="Before you enquire"

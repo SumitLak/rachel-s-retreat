@@ -21,7 +21,7 @@ export function PlannerTeaser() {
   const image = teaserTypes.find((t) => t.id === type)?.image ?? "/images/studio.webp";
 
   return (
-    <section className="bg-ivory py-28 md:py-36">
+    <section className="bg-ivory py-16 md:py-24">
       <div className="container-luxe grid overflow-hidden bg-card shadow-[0_0_0_1px_var(--color-border)] lg:grid-cols-[45fr_55fr]">
         <div className="p-8 md:p-12 xl:p-16">
           <Reveal>

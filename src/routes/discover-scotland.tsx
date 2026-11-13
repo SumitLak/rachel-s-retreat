@@ -51,7 +51,7 @@ function Scotland() {
         alt="The Kelpies, Falkirk"
       />
 
-      <section className="py-28 md:py-36">
+      <section className="py-16 md:py-24">
         <div className="container-luxe grid gap-12 lg:grid-cols-2 lg:gap-24">
           <SectionHeading
             eyebrow="Stay a while. See a little more."
@@ -72,7 +72,7 @@ function Scotland() {
             </ButtonLink>
           </Reveal>
         </div>
-        <div className="container-luxe mt-20 grid gap-8 md:grid-cols-3">
+        <div className="container-luxe mt-12 grid gap-8 md:grid-cols-3">
           {stories.map((s, i) => (
             <Reveal key={s.title} delay={i * 0.1} className={i === 1 ? "md:mt-20" : ""}>
               <ParallaxImage src={s.image} alt="" className="aspect-[3/4]" strength={10} />
@@ -83,13 +83,13 @@ function Scotland() {
         </div>
       </section>
 
-      <section className="bg-stone py-28 md:py-36">
+      <section className="bg-stone py-16 md:py-24">
         <div className="container-luxe">
           <SectionHeading
             eyebrow="Join a Scottish experience"
             lines={["A programme", <em key="p">to step into.</em>]}
           />
-          <div className="mt-14 grid gap-8">
+          <div className="mt-10 grid gap-8">
             {retreats.slice(0, 1).map((r) => (
               <Reveal key={r.id}>
                 <RetreatCard retreat={r} />
@@ -99,7 +99,7 @@ function Scotland() {
         </div>
       </section>
 
-      <section className="py-28 md:py-36">
+      <section className="py-16 md:py-24">
         <VenueCarousel
           venues={venues.filter((v) => v.country === "Scotland")}
           header={

@@ -53,7 +53,7 @@ function VenuesPage() {
         alt="The Manor House, County Monaghan"
       />
 
-      <section className="py-20 md:py-28">
+      <section className="py-12 md:py-20">
         <div className="container-luxe">
           <Reveal className="flex flex-col gap-6 border-y border-border py-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex flex-wrap items-center gap-2">
@@ -118,7 +118,7 @@ function VenuesPage() {
             </div>
           )}
 
-          <p className="mt-16 max-w-2xl text-sm text-muted-foreground">
+          <p className="mt-10 max-w-2xl text-sm text-muted-foreground">
             Group sizes depend on rooming, the properties reserved and your programme. Our team will
             confirm the right arrangement and availability.
           </p>

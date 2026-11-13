@@ -73,7 +73,7 @@ function RetreatsPage() {
         alt="Stirling Castle"
       />
 
-      <section className="py-20 md:py-28">
+      <section className="py-12 md:py-20">
         <div className="container-luxe">
           <Reveal className="flex flex-wrap gap-2 border-y border-border py-6">
             {tabs.map((t) => (
@@ -99,7 +99,7 @@ function RetreatsPage() {
             ))}
           </Reveal>
 
-          <div className="mt-14 grid gap-8">
+          <div className="mt-10 grid gap-8">
             <AnimatePresence mode="popLayout">
               {shown.map((r) => (
                 <motion.div
@@ -137,7 +137,7 @@ function RetreatsPage() {
         </div>
       </section>
 
-      <section id="enquire" className="scroll-mt-24 bg-stone py-24 md:py-32">
+      <section id="enquire" className="scroll-mt-24 bg-stone py-14 md:py-20">
         <div className="container-luxe grid gap-14 lg:grid-cols-[1fr_1.3fr]">
           <SectionHeading
             eyebrow="Find your kind of retreat"

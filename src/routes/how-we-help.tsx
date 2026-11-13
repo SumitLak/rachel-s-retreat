@@ -59,7 +59,7 @@ function HowWeHelp() {
         alt="A dish prepared by the Rachel's Retreats chefs"
       />
 
-      <section className="space-y-28 py-28 md:space-y-40 md:py-40">
+      <section className="space-y-16 py-16 md:space-y-24 md:py-24">
         {chapters.map((c, i) => (
           <div
             key={c.n}
@@ -84,7 +84,7 @@ function HowWeHelp() {
         ))}
       </section>
 
-      <section className="grain relative overflow-hidden bg-forest py-28 text-ivory md:py-36">
+      <section className="grain relative overflow-hidden bg-forest py-16 text-ivory md:py-24">
         <div className="container-luxe">
           <SectionHeading
             light
@@ -97,7 +97,7 @@ function HowWeHelp() {
             ]}
             intro="Rachel's approach puts guest experience at the heart of the stay. The team brings that care into the planning, the food and the everyday details."
           />
-          <div className="mt-20 grid gap-px bg-ivory/15 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-px bg-ivory/15 sm:grid-cols-2 lg:grid-cols-4">
             {team.map((t, i) => (
               <Reveal key={t.title} delay={i * 0.1} className="bg-forest">
                 <div className="h-full p-8 transition-colors duration-500 hover:bg-ink/40 md:p-10">

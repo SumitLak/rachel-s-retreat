@@ -373,7 +373,7 @@ function StoryStep({
     if (inView) onActive(index);
   }, [inView, index, onActive]);
   return (
-    <div ref={ref} className="flex items-center py-6 lg:min-h-[52vh] lg:py-8">
+    <div ref={ref} className="py-6 lg:py-10">
       <div
         className={cn("transition-opacity duration-700", active ? "opacity-100" : "lg:opacity-30")}
       >
